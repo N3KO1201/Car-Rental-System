@@ -1,3 +1,3 @@
 package main.java.entities;
 
-public class Car {}
+public class Order {}
