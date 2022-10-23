@@ -4,10 +4,11 @@
 
 package main.java.util;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
-import main.java.entities.User;
+
+// import java.util.regex.Pattern;
+// import main.java.entities.User;
 
 /**
  * @author Eugene Tin
@@ -28,7 +29,7 @@ public class ValidationService {
     String confirmPassword
   ) {
     // Retrieve staff objects from database
-    ArrayList<User> userAl = new FileService().readUserData();
+    // ArrayList<User> userAl = new FileService().readUserData();
     ArrayList<String> error = new ArrayList<String>();
     boolean userExist = false;
 
@@ -36,9 +37,9 @@ public class ValidationService {
     if (username.length() < 3) error.add("username");
 
     // iterate through staff arraylist to check if username already exists
-    for (User user : userAl) {
-      // if (user.getUsername().equals(username)) userExist = true;
-    }
+    // for (User user : userAl) {
+    // if (user.getUsername().equals(username)) userExist = true;
+    // }
 
     // validate username exists
     if (userExist) error.add("usernameExist");
