@@ -2,6 +2,7 @@ package main.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -28,6 +29,9 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import main.java.dao.AdminDao;
 import main.java.entities.Car;
+import main.java.entities.Order;
+import main.java.entities.Status;
+import main.java.entities.User;
 import main.java.util.FileService;
 import main.java.util.ValidationService;
 
@@ -69,7 +73,39 @@ public class AdminController
   private TableColumn<Car, LocalDateTime> createdAtCol;
 
   @FXML
+  private TableColumn<Order, Integer> _orderIdCol;
+
+  @FXML
+  private TableColumn<Order, Double> orderCostCol, totalPaymentCol;
+
+  @FXML
+  private TableColumn<Order, Long> durationCol;
+
+  @FXML
+  private TableColumn<Order, String> clientNameCol, contactCol, vehicleDetailCol;
+
+  @FXML
+  private TableColumn<Order, LocalDate> rentalCol;
+
+  @FXML
+  private TableColumn<Order, Boolean> paymentCol;
+
+  @FXML
+  private TableColumn<Order, Status> orderStatusCol;
+
+  @FXML
+  private TableColumn
+
+  @FXML
   private TableView<Car> listingTable;
+
+  @FXML
+  private TableView<Order> orderTable;
+
+  @FXML
+  private TableView<User> userTable;
+
+  
 
   public AdminController() {
     super();
@@ -387,97 +423,384 @@ public class AdminController
   }
 
   public void editListing(ActionEvent e) {
-    // boolean isEmpty = listingTable.getSelectionModel().isEmpty();
+    boolean isEmpty = listingTable.getSelectionModel().isEmpty();
 
-    // if (isEmpty) e.consume(); else {
-    //   cancelEditListingButton.setStyle("visibility: visible");
-    //   confirmEditListingButton.setStyle("visibility: visible");
+    if (isEmpty) e.consume(); else {
+      cancelEditListingButton.setStyle("visibility: visible");
+      confirmEditListingButton.setStyle("visibility: visible");
 
-    //   listingTable.setEditable(true);
-    //   plateNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
-    //   modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
-    //   brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
-    //   yearCol.setCellFactory(
-    //     TextFieldTableCell.forTableColumn(new IntegerStringConverter())
-    //   );
-    //   listingCostCol.setCellFactory(
-    //     TextFieldTableCell.forTableColumn(new DoubleStringConverter())
-    //   );
-    //   descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
+      listingTable.setEditable(true);
+      plateNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
+      modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+      brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
+      yearCol.setCellFactory(
+        TextFieldTableCell.forTableColumn(new IntegerStringConverter())
+      );
+      listingCostCol.setCellFactory(
+        TextFieldTableCell.forTableColumn(new DoubleStringConverter())
+      );
+      descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
-    //   plateNumCol.setOnEditCommit(
-    //     new EventHandler<javafx.scene.control.TableColumn.CellEditEvent<Car, String>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, String> event) {
-    //         Car res = event.getRowValue();
-    //         res.setPlateNum(event.getNewValue());
-    //       }
-    //     }
-    //   );
+      plateNumCol.setOnEditCommit(
+        new EventHandler<javafx.scene.control.TableColumn.CellEditEvent<Car, String>>() {
+          @Override
+          public void handle(CellEditEvent<Car, String> event) {
+            Car res = event.getRowValue();
+            res.setPlateNum(event.getNewValue());
+          }
+        }
+      );
 
-    //   modelCol.setOnEditCommit(
-    //     new EventHandler<CellEditEvent<Car, String>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, String> event) {
-    //         Car res = event.getRowValue();
-    //         res.setModel(event.getNewValue());
-    //       }
-    //     }
-    //   );
+      modelCol.setOnEditCommit(
+        new EventHandler<CellEditEvent<Car, String>>() {
+          @Override
+          public void handle(CellEditEvent<Car, String> event) {
+            Car res = event.getRowValue();
+            res.setModel(event.getNewValue());
+          }
+        }
+      );
 
-    //   brandCol.setOnEditCommit(
-    //     new EventHandler<CellEditEvent<Car, String>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, String> event) {
-    //         Car res = event.getRowValue();
-    //         res.setBrand(event.getNewValue());
-    //       }
-    //     }
-    //   );
+      brandCol.setOnEditCommit(
+        new EventHandler<CellEditEvent<Car, String>>() {
+          @Override
+          public void handle(CellEditEvent<Car, String> event) {
+            Car res = event.getRowValue();
+            res.setBrand(event.getNewValue());
+          }
+        }
+      );
 
-    //   yearCol.setOnEditCommit(
-    //     new EventHandler<CellEditEvent<Car, Integer>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, Integer> event) {
-    //         Car res = event.getRowValue();
-    //         res.setYear((Integer) event.getNewValue());
-    //       }
-    //     }
-    //   );
+      yearCol.setOnEditCommit(
+        new EventHandler<CellEditEvent<Car, Integer>>() {
+          @Override
+          public void handle(CellEditEvent<Car, Integer> event) {
+            Car res = event.getRowValue();
+            res.setYear((Integer) event.getNewValue());
+          }
+        }
+      );
 
-    //   listingCostCol.setOnEditCommit(
-    //     new EventHandler<CellEditEvent<Car, Double>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, Double> event) {
-    //         Car res = event.getRowValue();
-    //         res.setCost((Double) event.getNewValue());
-    //       }
-    //     }
-    //   );
+      listingCostCol.setOnEditCommit(
+        new EventHandler<CellEditEvent<Car, Double>>() {
+          @Override
+          public void handle(CellEditEvent<Car, Double> event) {
+            Car res = event.getRowValue();
+            res.setCost((Double) event.getNewValue());
+          }
+        }
+      );
 
-    //   descriptionCol.setOnEditCommit(
-    //     new EventHandler<CellEditEvent<Car, String>>() {
-    //       @Override
-    //       public void handle(CellEditEvent<Car, String> event) {
-    //         Car res = event.getRowValue();
-    //         res.setDescription(event.getNewValue());
-    //       }
-    //     }
-    //   );
-    // }
+      descriptionCol.setOnEditCommit(
+        new EventHandler<CellEditEvent<Car, String>>() {
+          @Override
+          public void handle(CellEditEvent<Car, String> event) {
+            Car res = event.getRowValue();
+            res.setDescription(event.getNewValue());
+          }
+        }
+      );
+    }
   }
 
-  public void cancelEditListing() {}
+  public void confirmEditListing(ActionEvent e) throws IOException {
+    // Append CONFIRMATION alert
+    boolean CONFIRMATION = super.appendAlert(
+      "Save Edit Listing",
+      "Save Modification",
+      "Are you sure you want to save your changes?"
+    );
 
-  public void confirmEditListing() {}
+    int selectedListingID = listingTable
+      .getSelectionModel()
+      .getSelectedItem()
+      .get_id();
 
-  public void rejectOrder() {}
+    if (CONFIRMATION) {
+      ArrayList<Car> carAl = new FileService().readCarData();
+      ListIterator<Car> li = carAl.listIterator();
+      boolean found = false;
+      Car selectedField = listingTable.getSelectionModel().getSelectedItem();
 
-  public void viewAllOrder() {}
+      String plateNum = selectedField.getPlateNum();
+      String newModel = selectedField.getModel();
+      String newBrand = selectedField.getBrand();
+      int newYear = selectedField.getYear();
+      double newCost = selectedField.getCost();
+      String newDescription = selectedField.getDescription();
 
-  public void approveOrder() {}
+      while (li.hasNext()) {
+        Car res = (Car) li.next();
+        if (res.get_id() == selectedListingID) {
+          // Update the reservation object with edited inputs if ID is found
+          li.set(
+            new Car(
+              res.get_id(),
+              plateNum,
+              newModel,
+              newBrand,
+              newYear,
+              newCost,
+              newDescription,
+              res.isAvailable()
+            )
+          );
+          found = true;
+        }
+      }
+      if (!found) System.out.println("What can you do?"); else new FileService()
+      .writeCarData(carAl);
 
-  public void searchOrder() {}
+      listingTable.setEditable(false);
+
+      cancelEditListingButton.setStyle("visibility: hidden");
+      confirmEditListingButton.setStyle("visibility: hidden");
+
+      // Refresh the new data table
+      viewAllListing();
+    }
+  }
+
+  public void cancelEditListing() {
+    boolean CONFIRMATION = super.appendAlert(
+      "Cancel Edit Listing",
+      "Modification unsaved",
+      "Are you sure you want to leave edit mode unsaved?"
+    );
+
+    if (CONFIRMATION) {
+      // Reset table edit mode
+      listingTable.setEditable(false);
+
+      // UI Changes
+      cancelEditListingButton.setStyle("visibility: hidden");
+      confirmEditListingButton.setStyle("visibility: hidden");
+
+      // Refresh the new data table
+      viewAllListing();
+    }
+  }
+
+  public void viewAllOrder() {
+    ArrayList<Order> sortByIDAl = super.sortByLatestOrder(
+      new FileService().readOrderData()
+    );
+
+    ObservableList<Order> orderOl = FXCollections.observableArrayList(
+      sortByIDAl
+    );
+
+    _orderIdCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Integer>("_id")
+    );
+
+    clientNameCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("clientName")
+    );
+
+    contactCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("contact")
+    );
+
+    vehicleDetailCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("vehicle")
+    );
+
+    orderCostCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Double>("cost")
+    );
+
+    rentalCol.setCellValueFactory(
+      new PropertyValueFactory<Order, LocalDate>("rentOn")
+    );
+
+    durationCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Long>("duration")
+    );
+
+    paymentCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Boolean>("paid")
+    );
+
+    totalPaymentCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Double>("totalCost")
+    );
+
+    orderStatusCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Status>("orderStatus")
+    );
+
+    orderTable.setItems(orderOl);
+    orderSearchInput.clear();
+  }
+
+  public void viewOrder(ArrayList<Order> orderAl) {
+    ObservableList<Order> orderOl = FXCollections.observableArrayList(orderAl);
+    _orderIdCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Integer>("_id")
+    );
+
+    clientNameCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("clientName")
+    );
+
+    contactCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("contact")
+    );
+
+    vehicleDetailCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("vehicle")
+    );
+
+    orderCostCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Double>("cost")
+    );
+
+    rentalCol.setCellValueFactory(
+      new PropertyValueFactory<Order, LocalDate>("rentOn")
+    );
+
+    durationCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Long>("duration")
+    );
+
+    paymentCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Boolean>("paid")
+    );
+
+    totalPaymentCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Double>("totalCost")
+    );
+
+    orderStatusCol.setCellValueFactory(
+      new PropertyValueFactory<Order, Status>("orderStatus")
+    );
+
+    orderTable.setItems(orderOl);
+  }
+
+  public void searchOrder(ActionEvent e) {
+    String input = orderSearchInput.getText().trim().toUpperCase();
+    boolean found = false;
+
+    ArrayList<Order> result = new ArrayList<Order>();
+    ListIterator<Order> li = null;
+
+    ArrayList<Order> orderAl = new FileService().readOrderData();
+    li = orderAl.listIterator();
+
+    while (li.hasNext()) {
+      Order order = (Order) li.next();
+
+      if (
+        String.valueOf(order.get_id()).equals(input) ||
+        order.getContact().equals(input)
+      ) result.add(order);
+
+      if (!result.isEmpty()) found = true;
+    }
+
+    // if search input is empty, console log a notice
+    if (!found && input.equals("")) System.out.println(
+      "Nothing is on the search field!"
+    ); else {
+      if (!found) {
+        // * If no result is found, append an alert to notice the user
+        super.appendAlert(
+          "Order ID or Contact Number",
+          "Order ID or Contact Number does not exist",
+          "Please check the input and search again."
+        );
+        orderSearchInput.clear();
+      } else viewOrder(result); // * if result is found, invoke the
+    }
+  }
+
+  public void rejectOrder(ActionEvent e) {
+    boolean isEmpty = orderTable.getSelectionModel().isEmpty();
+
+    if (isEmpty) e.consume(); else {
+      int selectedOrderID = orderTable
+        .getSelectionModel()
+        .getSelectedItem()
+        .get_id();
+
+      boolean CONFIRMATION = super.appendAlert(
+        "Reject Order Request",
+        "Reject Order ID: " + selectedOrderID,
+        "Are you sure you want to reject this order request?"
+      );
+
+      if (CONFIRMATION) {
+        ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+        boolean found = false;
+
+        while (!found) {
+          Order order = (Order) orderLi.next();
+          if (order.get_id() == selectedOrderID) {
+            order.setOrderStatus(Status.REJECTED);
+            found = true;
+          }
+        }
+
+        if (!found) {
+          System.out.println("Cannot reject this order");
+        } else {
+          new FileService().writeOrderData(orderAl);
+          viewAllOrder();
+          super.appendAlert(
+            "Order Rejected Successfully!",
+            "Rejected Order ID: " + selectedOrderID,
+            "Attention! This order request has been rejected! Please notify the client or make changes later on."
+          );
+        }
+      }
+    }
+  }
+
+  public void approveOrder(ActionEvent e) {
+    boolean isEmpty = orderTable.getSelectionModel().isEmpty();
+
+    if (isEmpty) e.consume(); else {
+      int selectedOrderID = orderTable
+        .getSelectionModel()
+        .getSelectedItem()
+        .get_id();
+
+      boolean CONFIRMATION = super.appendAlert(
+        "Approve Order Request",
+        "Approve Order ID: " + selectedOrderID,
+        "Are you sure you want to approve this order request?"
+      );
+
+      if (CONFIRMATION) {
+        ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+        boolean found = false;
+
+        while (!found) {
+          Order order = (Order) orderLi.next();
+          if (order.get_id() == selectedOrderID) {
+            order.setOrderStatus(Status.APPROVED);
+            found = true;
+          }
+        }
+
+        if (!found) {
+          System.out.println("Cannot approve this order");
+        } else {
+          new FileService().writeOrderData(orderAl);
+          viewAllOrder();
+          super.appendAlert(
+            "Order Approved Successfully!",
+            "Approved Order ID: " + selectedOrderID,
+            "Attention! This order request has been approved! Please notify the client or make changes later on."
+          );
+        }
+      }
+    }
+  }
 
   public void generateReport() {}
 
@@ -494,6 +817,9 @@ public class AdminController
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     viewAllListing();
+    viewAllOrder();
+    viewAllLog();
+    viewAllUser();
   }
 }
 // force the field to be numeric only

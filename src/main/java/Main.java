@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.entities.Car;
+import main.java.entities.Order;
 import main.java.util.FileService;
 
 /**
@@ -51,11 +52,11 @@ public class Main extends Application {
     new Seeder().seedCar();
     new Seeder().seedOrder();
 
-    // ArrayList<Car> al = new FileService().readCarData();
+    ArrayList<Order> al = new FileService().readOrderData();
 
-    // for (Car car : al) {
-    //   System.out.println(car);
-    // }
+    for (Order order : al) {
+      System.out.println(order);
+    }
 
     // invoke javafx GUI
     launch(args);

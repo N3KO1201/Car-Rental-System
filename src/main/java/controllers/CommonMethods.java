@@ -127,4 +127,18 @@ public class CommonMethods {
 
     return carAl;
   }
+
+  // Sort arraylist by ID in descending order
+  public ArrayList<Order> sortByLatestOrder(ArrayList<Order> orderAl) {
+    Collections.sort(
+      orderAl,
+      new Comparator<Order>() {
+        public int compare(Order o1, Order o2) {
+          return o2.get_id() - o1.get_id();
+        }
+      }
+    );
+
+    return orderAl;
+  }
 }

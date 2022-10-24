@@ -27,35 +27,27 @@ public class Order implements Serializable {
     String vehicle,
     double cost,
     LocalDate rentOn,
-    LocalDate returnOn
+    LocalDate returnOn,
+    boolean paid
   ) {
     this.set_id(_id); // 1000
     this.setClientName(clientName); // eugene
     this.setContact(contact); // 0183216766
     this.setVehicle(vehicle); // Toyota Prius, 2018
     this.setCost(cost); //  299.9
-    this.setTotalCost();
+
     this.setRentOn(rentOn); // LocalDate 2022/09/08
     this.setReturnOn(returnOn);
     this.setDuration(); // long 5
-    this.setPaid(); // boolean false
+    this.setPaid(paid); // boolean false
+    this.setTotalCost();
     this.setOrderStatus(); // enum PENDING
-  }
-
-  public Order(int _id, boolean isPaid) {
-    this.set_id(_id);
-    this.setPaid(isPaid);
-  }
-
-  public Order(int _id, Status orderStatus) {
-    this.set_id(_id);
-    this.setOrderStatus(orderStatus);
   }
 
   @Override
   public String toString() {
     return String.format(
-      "%d %s %s %s %.2f %s %d %b %s",
+      "%d %s %s %s %.2f %s %d %s %.2f %s",
       _id,
       _clientName,
       _contact,
@@ -64,6 +56,7 @@ public class Order implements Serializable {
       _rentOn,
       _duration,
       _isPaid,
+      _totalCost,
       _orderStatus
     );
   }
@@ -147,11 +140,9 @@ public class Order implements Serializable {
   }
 
   public void setTotalCost() {
-    this._totalCost = _cost * serviceTax * _duration;
-  }
+    double totalCost = getCost() * serviceTax * getDuration();
 
-  public void setPaid() {
-    this._isPaid = false;
+    this._totalCost = Math.round(totalCost);
   }
 
   public void setPaid(boolean _isPaid) {

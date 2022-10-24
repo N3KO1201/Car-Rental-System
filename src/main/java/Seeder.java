@@ -137,7 +137,8 @@ public class Seeder {
       "Proton X50, 2020",
       200.0,
       LocalDate.parse("2022-02-20"),
-      LocalDate.parse("2022-02-24")
+      LocalDate.parse("2022-02-24"),
+      false
     );
     Order order2 = new Order(
       10001,
@@ -146,7 +147,8 @@ public class Seeder {
       "Tesla Model Y, 2020",
       400.0,
       LocalDate.parse("2022-01-20"),
-      LocalDate.parse("2022-01-26")
+      LocalDate.parse("2022-01-26"),
+      false
     );
     Order order3 = new Order(
       10002,
@@ -155,7 +157,8 @@ public class Seeder {
       "Bugatti Chiron, 2002",
       4000.0,
       LocalDate.parse("2022-02-10"),
-      LocalDate.parse("2022-02-13")
+      LocalDate.parse("2022-02-13"),
+      false
     );
     Order order4 = new Order(
       10003,
@@ -164,7 +167,8 @@ public class Seeder {
       "Apple iCar, 2077",
       40000.0,
       LocalDate.parse("2077-02-20"),
-      LocalDate.parse("2077-02-21")
+      LocalDate.parse("2077-02-21"),
+      false
     );
     Order order5 = new Order(
       10004,
@@ -173,7 +177,8 @@ public class Seeder {
       "Rolls Royce Phantom, 2017",
       8000.0,
       LocalDate.parse("2022-02-27"),
-      LocalDate.parse("2022-02-28")
+      LocalDate.parse("2022-02-28"),
+      false
     );
 
     al.add(order1);
