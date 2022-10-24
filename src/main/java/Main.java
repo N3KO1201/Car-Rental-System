@@ -4,11 +4,14 @@
 package main.java;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.entities.Car;
+import main.java.util.FileService;
 
 /**
  * @author Eugene Tin
@@ -25,11 +28,16 @@ public class Main extends Application {
       loader.getController();
       Scene scene = new Scene(root);
 
-      stage.setTitle("Resort Room Booking System");
+      stage.setTitle("Super Car Rental System");
       stage.centerOnScreen();
       stage.setResizable(false);
       stage.setScene(scene);
       stage.show();
+      stage.setOnCloseRequest(
+        evt -> {
+          System.out.println("Stage is closing");
+        }
+      );
     } catch (Exception err) {
       err.printStackTrace();
     }
@@ -39,9 +47,15 @@ public class Main extends Application {
     throws IOException, InterruptedException, ClassNotFoundException {
     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
-    // new Seeder().seedStaff();
-    // new Seeder().seedRoom();
-    // new Seeder().seedReservation();
+    new Seeder().seedUser();
+    new Seeder().seedCar();
+    new Seeder().seedOrder();
+
+    // ArrayList<Car> al = new FileService().readCarData();
+
+    // for (Car car : al) {
+    //   System.out.println(car);
+    // }
 
     // invoke javafx GUI
     launch(args);

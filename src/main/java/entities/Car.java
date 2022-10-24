@@ -7,6 +7,7 @@ import java.time.ZoneId;
 public class Car implements Serializable {
 
   private int _id;
+  private String _plateNum;
   private String _model;
   private String _brand;
   private int _year;
@@ -19,6 +20,7 @@ public class Car implements Serializable {
 
   public Car(
     int _id,
+    String plateNum,
     String model,
     String brand,
     int year,
@@ -27,6 +29,7 @@ public class Car implements Serializable {
     boolean available
   ) {
     this.set_id(_id);
+    this.setPlateNum(plateNum);
     this.setModel(model);
     this.setBrand(brand);
     this.setYear(year);
@@ -39,6 +42,10 @@ public class Car implements Serializable {
   // Getter
   public int get_id() {
     return _id;
+  }
+
+  public String getPlateNum() {
+    return _plateNum.trim().toUpperCase();
   }
 
   public String getModel() {
@@ -72,14 +79,16 @@ public class Car implements Serializable {
   @Override
   public String toString() {
     return String.format(
-      "%d %s %s %d %.2f %s %b",
+      "%d %s %s %s %d %.2f %s %b %s",
       _id,
+      _plateNum,
       _model,
       _brand,
       _year,
       _cost,
       _description,
-      _available
+      _available,
+      _createdAt
     );
   }
 
@@ -92,12 +101,16 @@ public class Car implements Serializable {
     this._model = model;
   }
 
+  public void setPlateNum(String plateNum) {
+    this._plateNum = plateNum.trim().toUpperCase();
+  }
+
   public void setBrand(String brand) {
     this._brand = brand;
   }
 
-  public void setYear(int year) {
-    this._year = year;
+  public void setYear(Integer integer) {
+    this._year = integer;
   }
 
   public void setCost(double cost) {

@@ -4,12 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-enum Status {
-  PENDING,
-  APPROVED,
-  REJECTED,
-}
-
 public class Order implements Serializable {
 
   private int _id;
