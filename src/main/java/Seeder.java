@@ -2,7 +2,6 @@ package main.java;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import main.java.entities.Car;
 import main.java.entities.Log;
