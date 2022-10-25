@@ -65,7 +65,7 @@ public class Log implements Serializable {
     return _logoffTimestamp;
   }
 
-  public String onlineDuration() {
+  public String getOnlineDuration() {
     return _onlineDuration;
   }
 
@@ -129,7 +129,7 @@ public class Log implements Serializable {
 
       onlineDuration =
         String.format(
-          "%02d:%02d:%02d HH:MM:ss",
+          "%02d hrs %02d mins %02d secs",
           TimeUnit.MILLISECONDS.toHours(millis),
           TimeUnit.MILLISECONDS.toMinutes(millis) -
           TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),

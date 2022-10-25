@@ -113,6 +113,15 @@ public class AdminController
   @FXML
   private TableView<User> userTable;
 
+  @FXML
+  private TableColumn<Log, Integer> _logIdCol, logUserIdCol;
+
+  @FXML
+  private TableColumn<Log, String> logUsernameCol, logUserRoleCol, logEmailCol, inTimestampCol, offTimestampCol, onlineCol;
+
+  @FXML
+  private TableView<Log> logTable;
+
   public AdminController() {
     super();
   }
@@ -829,9 +838,122 @@ public class AdminController
 
   public void generateReport() {}
 
-  public void searchLog() {}
+  public void viewAllLog() {
+    ObservableList<Log> logOl = FXCollections.observableArrayList(
+      new FileService().readLogData()
+    );
 
-  public void viewAllLog() {}
+    _logIdCol.setCellValueFactory(
+      new PropertyValueFactory<Log, Integer>("_id")
+    );
+
+    logUserIdCol.setCellValueFactory(
+      new PropertyValueFactory<Log, Integer>("_userId")
+    );
+
+    logUsernameCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("username")
+    );
+
+    logUserRoleCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("userRole")
+    );
+
+    logEmailCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("email")
+    );
+
+    inTimestampCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("loginTimestamp")
+    );
+
+    offTimestampCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("logoffTimestamp")
+    );
+
+    onlineCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("onlineDuration")
+    );
+
+    // * Set log table data
+    logTable.setItems(logOl);
+    // Reset existings search input fields
+    logSearchInput.clear();
+  }
+
+  public void viewLog(ArrayList<Log> logAl) {
+    ObservableList<Log> logOl = FXCollections.observableArrayList(logAl);
+    _logIdCol.setCellValueFactory(
+      new PropertyValueFactory<Log, Integer>("_id")
+    );
+
+    logUserIdCol.setCellValueFactory(
+      new PropertyValueFactory<Log, Integer>("_userId")
+    );
+
+    logUsernameCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("username")
+    );
+
+    logUserRoleCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("userRole")
+    );
+
+    logEmailCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("email")
+    );
+
+    inTimestampCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("loginTimestamp")
+    );
+
+    offTimestampCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("logoffTimestamp")
+    );
+
+    onlineCol.setCellValueFactory(
+      new PropertyValueFactory<Log, String>("onlineDuration")
+    );
+
+    logTable.setItems(logOl);
+  }
+
+  public void searchLog() {
+    String input = logSearchInput.getText();
+    boolean found = false;
+
+    ArrayList<Log> result = new ArrayList<Log>();
+    ListIterator<Log> li = null;
+
+    ArrayList<Log> logAl = new FileService().readLogData();
+    li = logAl.listIterator();
+
+    while (li.hasNext()) {
+      Log log = (Log) li.next();
+
+      if (
+        String.valueOf(log.get_userId()).equals(input) ||
+        log.getUsername().equals(input)
+      ) result.add(log);
+
+      if (!result.isEmpty()) found = true;
+    }
+
+    // if search input is empty, console log a notice
+    if (!found && input.equals("")) System.out.println(
+      "Nothing is on the search field!"
+    ); else {
+      if (!found) {
+        // * If no result is found, append an alert to notice the user
+        super.appendAlert(
+          "User ID or Username",
+          "User ID or Username does not exist",
+          "Please check the input and search again."
+        );
+        orderSearchInput.clear();
+      } else viewLog(result);
+    }
+  }
 
   public void viewAllUser() {
     ObservableList<User> UserOl = FXCollections.observableArrayList(
@@ -890,7 +1012,7 @@ public class AdminController
   }
 
   public void searchUser() {
-    String input = userSearchInput.getText().trim().toUpperCase();
+    String input = userSearchInput.getText().trim().toLowerCase();
     boolean found = false;
 
     ArrayList<User> result = new ArrayList<User>();
@@ -904,7 +1026,7 @@ public class AdminController
 
       if (
         String.valueOf(user.get_id()).equals(input) ||
-        user.getContact().equals(input)
+        user.getUsername().trim().toLowerCase().equals(input)
       ) result.add(user);
 
       if (!result.isEmpty()) found = true;
@@ -958,6 +1080,7 @@ public class AdminController
               break;
             } else {
               user.setAdmin(!user.isAdmin());
+              viewAllUser();
               found = true;
             }
           }

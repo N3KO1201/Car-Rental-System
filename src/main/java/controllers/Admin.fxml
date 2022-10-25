@@ -252,9 +252,9 @@
                            <columns>
                               <TableColumn fx:id="_logIdCol" prefWidth="113.0" resizable="false" style="fx-text-alignment: center;" text="Log ID" />
                               <TableColumn fx:id="logUserIdCol" resizable="false" style="fx-text-alignment: center;" text="User ID" />
-                              <TableColumn fx:id="usernameCol" prefWidth="194.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Username" />
-                              <TableColumn fx:id="userRoleCol" prefWidth="81.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="User Role" />
-                              <TableColumn fx:id="emailCol" minWidth="0.0" prefWidth="268.0" resizable="false" text="Email" />
+                              <TableColumn fx:id="logUsernameCol" prefWidth="194.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Username" />
+                              <TableColumn fx:id="logUserRoleCol" prefWidth="81.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="User Role" />
+                              <TableColumn fx:id="logEmailCol" minWidth="0.0" prefWidth="268.0" resizable="false" text="Email" />
                               <TableColumn fx:id="inTimestampCol" prefWidth="192.0" resizable="false" text="Logged In Timestamp" />
                               <TableColumn fx:id="offTimestampCol" prefWidth="179.0" resizable="false" text="Logged Off Timestamp" />
                               <TableColumn fx:id="onlineCol" prefWidth="170.0" resizable="false" text="Online Duration" />
