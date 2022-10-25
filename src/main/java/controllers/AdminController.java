@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ListIterator;
@@ -24,11 +26,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import main.java.dao.AdminDao;
 import main.java.entities.Car;
+import main.java.entities.Log;
 import main.java.entities.Order;
 import main.java.entities.Status;
 import main.java.entities.User;
@@ -94,7 +96,13 @@ public class AdminController
   private TableColumn<Order, Status> orderStatusCol;
 
   @FXML
-  private TableColumn
+  private TableColumn<User, String> usernameCol, userEmailCol, userContactCol;
+
+  @FXML
+  private TableColumn<User, Integer> _userIdCol;
+
+  @FXML
+  private TableColumn<User, Boolean> isAdminCol;
 
   @FXML
   private TableView<Car> listingTable;
@@ -104,8 +112,6 @@ public class AdminController
 
   @FXML
   private TableView<User> userTable;
-
-  
 
   public AdminController() {
     super();
@@ -142,7 +148,26 @@ public class AdminController
     );
 
     // CONFIRMATION = true, switch user back to Login Scene
-    if (CONFIRMATION) super.loadButtonScene(e);
+    if (CONFIRMATION) {
+      super.loadButtonScene(e);
+      LocalDateTime newTimeStamp = LocalDateTime.now(ZoneId.of("GMT+08:00"));
+      String formattedTimeStamp = newTimeStamp.format(
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+      );
+
+      ArrayList<Log> logAl = new FileService().readLogData();
+      ListIterator<Log> logLi = logAl.listIterator();
+
+      while (logLi.hasNext()) {
+        Log log = (Log) logLi.next();
+
+        log.setLogoffTimestamp(formattedTimeStamp);
+        log.setOnlineDuration();
+        break;
+      }
+
+      new FileService().writeLogData(logAl);
+    }
   }
 
   // TableView to view all reservation
@@ -808,11 +833,150 @@ public class AdminController
 
   public void viewAllLog() {}
 
-  public void assignRole() {}
+  public void viewAllUser() {
+    ObservableList<User> UserOl = FXCollections.observableArrayList(
+      new FileService().readUserData()
+    );
 
-  public void searchUser() {}
+    _userIdCol.setCellValueFactory(
+      new PropertyValueFactory<User, Integer>("_id")
+    );
 
-  public void viewAllUser() {}
+    usernameCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("username")
+    );
+
+    userEmailCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("email")
+    );
+
+    userContactCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("contact")
+    );
+
+    isAdminCol.setCellValueFactory(
+      new PropertyValueFactory<User, Boolean>("admin")
+    );
+
+    // * Set reservation table data
+    userTable.setItems(UserOl);
+    // Reset existings search input fields
+    userSearchInput.clear();
+  }
+
+  public void viewUser(ArrayList<User> userAl) {
+    ObservableList<User> UserOl = FXCollections.observableArrayList(userAl);
+    _userIdCol.setCellValueFactory(
+      new PropertyValueFactory<User, Integer>("_id")
+    );
+
+    usernameCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("username")
+    );
+
+    userEmailCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("email")
+    );
+
+    userContactCol.setCellValueFactory(
+      new PropertyValueFactory<User, String>("contact")
+    );
+
+    isAdminCol.setCellValueFactory(
+      new PropertyValueFactory<User, Boolean>("admin")
+    );
+
+    userTable.setItems(UserOl);
+  }
+
+  public void searchUser() {
+    String input = userSearchInput.getText().trim().toUpperCase();
+    boolean found = false;
+
+    ArrayList<User> result = new ArrayList<User>();
+    ListIterator<User> li = null;
+
+    ArrayList<User> userAl = new FileService().readUserData();
+    li = userAl.listIterator();
+
+    while (li.hasNext()) {
+      User user = (User) li.next();
+
+      if (
+        String.valueOf(user.get_id()).equals(input) ||
+        user.getContact().equals(input)
+      ) result.add(user);
+
+      if (!result.isEmpty()) found = true;
+    }
+
+    // if search input is empty, console log a notice
+    if (!found && input.equals("")) System.out.println(
+      "Nothing is on the search field!"
+    ); else {
+      if (!found) {
+        // * If no result is found, append an alert to notice the user
+        super.appendAlert(
+          "User ID or Contact Number",
+          "User ID or Contact Number does not exist",
+          "Please check the input and search again."
+        );
+        orderSearchInput.clear();
+      } else viewUser(result);
+    }
+  }
+
+  public void assignRole(ActionEvent e) {
+    boolean isEmpty = userTable.getSelectionModel().isEmpty();
+
+    if (isEmpty) e.consume(); else {
+      int selectedUserID = userTable
+        .getSelectionModel()
+        .getSelectedItem()
+        .get_id();
+
+      boolean CONFIRMATION = super.appendAlert(
+        "Assign current user as ADMIN/CLIENT",
+        "Assign User ID: " + selectedUserID,
+        "Are you sure you want to assign this user as ADMIN/CLIENT?"
+      );
+
+      if (CONFIRMATION) {
+        ArrayList<User> userAl = new FileService().readUserData();
+        ListIterator<User> userLi = userAl.listIterator();
+        boolean found = false;
+
+        while (!found) {
+          User user = (User) userLi.next();
+          if (user.get_id() == selectedUserID) {
+            if (user.getUsername().equals(LoginController.loggedInUsername)) {
+              super.appendAlert(
+                "Assign current user as ADMIN/CLIENT FAILED",
+                "Assign User ID: " + selectedUserID,
+                "Current user is logged in as ADMIN, not eligible to switch role!!!"
+              );
+              break;
+            } else {
+              user.setAdmin(!user.isAdmin());
+              found = true;
+            }
+          }
+        }
+
+        if (!found) {
+          System.out.println("Cannot approve this order");
+        } else {
+          new FileService().writeUserData(userAl);
+          viewAllOrder();
+          super.appendAlert(
+            "User has been assign as ADMIN/CLIENT Successfully!",
+            "Assigned User ID: " + selectedUserID,
+            "User role has been modified!"
+          );
+        }
+      }
+    }
+  }
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -822,13 +986,3 @@ public class AdminController
     viewAllUser();
   }
 }
-// force the field to be numeric only
-// textField.textProperty().addListener(new ChangeListener<String>() {
-//     @Override
-//     public void changed(ObservableValue<? extends String> observable, String oldValue,
-//         String newValue) {
-//         if (!newValue.matches("\\d*")) {
-//             textField.setText(newValue.replaceAll("[^\\d]", ""));
-//         }
-//     }
-// });

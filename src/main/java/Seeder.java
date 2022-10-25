@@ -2,8 +2,10 @@ package main.java;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import main.java.entities.Car;
+import main.java.entities.Log;
 import main.java.entities.Order;
 import main.java.entities.User;
 import main.java.util.FileService;
@@ -188,5 +190,67 @@ public class Seeder {
     al.add(order5);
 
     new FileService().writeOrderData(al);
+  }
+
+  public void seedLog() throws IOException {
+    ArrayList<Log> al = new ArrayList<Log>();
+
+    Log log1 = new Log(
+      10000000,
+      1,
+      "eugene",
+      "ADMIN",
+      "tp061195@mail.com",
+      "2022-10-23 12:12:16",
+      "2022-10-25 18:21:45"
+    );
+    Log log2 = new Log(
+      10000001,
+      2,
+      "elonmusk",
+      "CLIENT",
+      "tp061196@mail.com",
+      "2022-10-23 12:12:21",
+      "2022-11-25 18:33:42"
+    );
+    Log log3 = new Log(
+      10000002,
+      1,
+      "eugene",
+      "ADMIN",
+      "tp061195@mail.com",
+      "2022-10-23 17:02:16",
+      "2022-10-25 18:14:06"
+    );
+    Log log4 = new Log(
+      10000003,
+      2,
+      "elonmusk",
+      "CLIENT",
+      "tp061196@mail.com",
+      "2022-11-03 12:44:21",
+      "2022-11-05 18:44:54"
+    );
+    Log log5 = new Log(
+      10000004,
+      1,
+      "eugene",
+      "ADMIN",
+      "tp061195@mail.com",
+      "2022-10-25 12:41:32",
+      "2022-10-25 16:51:01"
+    );
+
+    al.add(log1);
+    al.add(log2);
+    al.add(log3);
+    al.add(log4);
+    al.add(log5);
+
+    for (Log log : al) {
+      log.setOnlineDuration();
+    }
+
+    new FileService().writeLogData(al);
   }
 }

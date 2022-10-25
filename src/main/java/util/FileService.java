@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import main.java.entities.Car;
+import main.java.entities.Log;
 import main.java.entities.Order;
 import main.java.entities.User;
 
@@ -24,6 +27,7 @@ public class FileService {
   public File userFile = new File("src/main/resources/data/User.txt");
   public File carFile = new File("src/main/resources/data/Car.txt");
   public File orderFile = new File("src/main/resources/data/Order.txt");
+  public File logFile = new File("src/main/resources/data/Log.txt");
 
   /**
    * * Read User objects that are stored within the user file
@@ -120,6 +124,36 @@ public class FileService {
       ObjectOutputStream oos = null;
       oos = new ObjectOutputStream(new FileOutputStream(orderFile));
       oos.writeObject(orderAl);
+      oos.close();
+    } catch (IOException err) {
+      err.printStackTrace();
+    }
+  }
+
+  // Log
+  @SuppressWarnings("unchecked")
+  public ArrayList<Log> readLogData() {
+    ArrayList<Log> logAl = new ArrayList<Log>();
+    ObjectInputStream ois = null;
+
+    try {
+      if (logFile.isFile()) {
+        ois = new ObjectInputStream(new FileInputStream(logFile));
+        logAl = (ArrayList<Log>) ois.readObject();
+        ois.close();
+      }
+      return logAl;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return logAl;
+    }
+  }
+
+  public void writeLogData(ArrayList<Log> logAl) {
+    try {
+      ObjectOutputStream oos = null;
+      oos = new ObjectOutputStream(new FileOutputStream(logFile));
+      oos.writeObject(logAl);
       oos.close();
     } catch (IOException err) {
       err.printStackTrace();

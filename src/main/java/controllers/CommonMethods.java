@@ -21,8 +21,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
 import main.java.entities.Car;
+import main.java.entities.Log;
 import main.java.entities.Order;
-import main.java.entities.User;
 
 /**
  * @author Eugene Tin
@@ -140,5 +140,19 @@ public class CommonMethods {
     );
 
     return orderAl;
+  }
+
+  // Sort arraylist by ID in descending order
+  public ArrayList<Log> sortByLatestLog(ArrayList<Log> logAl) {
+    Collections.sort(
+      logAl,
+      new Comparator<Log>() {
+        public int compare(Log l1, Log l2) {
+          return l2.get_id() - l1.get_id();
+        }
+      }
+    );
+
+    return logAl;
   }
 }

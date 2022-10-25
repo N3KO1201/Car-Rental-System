@@ -4,6 +4,9 @@
 package main.java.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ListIterator;
@@ -13,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.java.dao.*;
+import main.java.entities.Log;
 import main.java.entities.User;
 import main.java.util.EncryptionService;
 import main.java.util.FileService;
@@ -22,6 +26,8 @@ import main.java.util.ValidationService;
  * @author Eugene Tin
  */
 public class LoginController extends CommonMethods implements UserDao {
+
+  public static String loggedInUsername;
 
   @FXML
   TextField usernameInput, passwordInput, confirmPasswordInput, emailInput, contactInput;
@@ -63,11 +69,49 @@ public class LoginController extends CommonMethods implements UserDao {
           );
 
           if (valid) {
+            ArrayList<Log> logAl = new FileService().readLogData();
+            int recentID;
+            String role;
+
+            if (user.isAdmin()) role = "ADMIN"; else role = "CLIENT";
+
+            if (logAl.size() != 0) recentID =
+              logAl
+                .stream()
+                .max(Comparator.comparing(Log::get_id))
+                .get()
+                .get_id() +
+              1; else recentID = 10000000;
+
+            LocalDateTime newTimeStamp = LocalDateTime.now(
+              ZoneId.of("GMT+08:00")
+            );
+            String formattedTimeStamp = newTimeStamp.format(
+              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            );
+
+            Log newLog = new Log(
+              recentID,
+              user.get_id(),
+              user.getUsername(),
+              role,
+              user.getEmail(),
+              formattedTimeStamp,
+              "-"
+            );
+
+            logAl.add(newLog);
+            ArrayList<Log> sortByIDAl = super.sortByLatestLog(logAl);
+            new FileService().writeLogData(sortByIDAl);
+
             // prompt user to home page
             FXMLLoader loader = super.loadButtonScene(e);
             AdminController adminController = loader.getController();
             adminController.displayName(username);
+            adminController.viewAllLog();
+            loggedInUsername = username;
 
+            //
             System.out.println(
               "User authentication success, load home page depending on user's authority"
             );
