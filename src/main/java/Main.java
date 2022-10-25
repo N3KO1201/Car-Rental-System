@@ -74,10 +74,6 @@ public class Main extends Application {
     new Seeder().seedOrder();
     new Seeder().seedLog();
 
-    ArrayList<Log> al = new FileService().readLogData();
-
-    System.out.println(al);
-
     // invoke javafx GUI
     launch(args);
   }

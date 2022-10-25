@@ -133,6 +133,7 @@ public class AdminController
   }
 
   // Clear car listing input fields
+  @Override
   public void clearInput() {
     numberPlateInput.clear();
     modelInput.clear();
@@ -148,6 +149,7 @@ public class AdminController
     descriptionErr.setStyle("-fx-opacity: 0");
   }
 
+  @Override
   public void logout(ActionEvent e) {
     // append CONFIRMATION alert
     boolean CONFIRMATION = super.appendAlert(
@@ -229,6 +231,7 @@ public class AdminController
   }
 
   // View one or more listing based on search result
+  @Override
   public void viewListing(ArrayList<Car> carAl) {
     ObservableList<Car> carOl = FXCollections.observableArrayList(carAl);
 
@@ -272,6 +275,7 @@ public class AdminController
     listingTable.setItems(carOl);
   }
 
+  @Override
   public void searchListing(ActionEvent e) {
     String input = listingSearchInput.getText().trim().toUpperCase();
     boolean found = false;
@@ -310,6 +314,7 @@ public class AdminController
   }
 
   // Create new car listing
+  @Override
   public void createListing() {
     ArrayList<Car> carAl = new FileService().readCarData();
     int recentID;
@@ -409,6 +414,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void deleteListing(ActionEvent e) throws IOException {
     boolean isEmpty = listingTable.getSelectionModel().isEmpty();
 
@@ -456,6 +462,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void editListing(ActionEvent e) {
     boolean isEmpty = listingTable.getSelectionModel().isEmpty();
 
@@ -537,6 +544,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void confirmEditListing(ActionEvent e) throws IOException {
     // Append CONFIRMATION alert
     boolean CONFIRMATION = super.appendAlert(
@@ -595,6 +603,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void cancelEditListing() {
     boolean CONFIRMATION = super.appendAlert(
       "Cancel Edit Listing",
@@ -615,6 +624,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void viewAllOrder() {
     ArrayList<Order> sortByIDAl = super.sortByLatestOrder(
       new FileService().readOrderData()
@@ -668,6 +678,7 @@ public class AdminController
     orderSearchInput.clear();
   }
 
+  @Override
   public void viewOrder(ArrayList<Order> orderAl) {
     ObservableList<Order> orderOl = FXCollections.observableArrayList(orderAl);
     _orderIdCol.setCellValueFactory(
@@ -713,6 +724,7 @@ public class AdminController
     orderTable.setItems(orderOl);
   }
 
+  @Override
   public void searchOrder(ActionEvent e) {
     String input = orderSearchInput.getText().trim().toUpperCase();
     boolean found = false;
@@ -750,6 +762,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void rejectOrder(ActionEvent e) {
     boolean isEmpty = orderTable.getSelectionModel().isEmpty();
 
@@ -793,6 +806,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void approveOrder(ActionEvent e) {
     boolean isEmpty = orderTable.getSelectionModel().isEmpty();
 
@@ -836,8 +850,10 @@ public class AdminController
     }
   }
 
+  @Override
   public void generateReport() {}
 
+  @Override
   public void viewAllLog() {
     ObservableList<Log> logOl = FXCollections.observableArrayList(
       new FileService().readLogData()
@@ -881,6 +897,7 @@ public class AdminController
     logSearchInput.clear();
   }
 
+  @Override
   public void viewLog(ArrayList<Log> logAl) {
     ObservableList<Log> logOl = FXCollections.observableArrayList(logAl);
     _logIdCol.setCellValueFactory(
@@ -918,7 +935,8 @@ public class AdminController
     logTable.setItems(logOl);
   }
 
-  public void searchLog() {
+  @Override
+  public void searchLog(ActionEvent e) {
     String input = logSearchInput.getText();
     boolean found = false;
 
@@ -955,6 +973,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void viewAllUser() {
     ObservableList<User> UserOl = FXCollections.observableArrayList(
       new FileService().readUserData()
@@ -986,6 +1005,7 @@ public class AdminController
     userSearchInput.clear();
   }
 
+  @Override
   public void viewUser(ArrayList<User> userAl) {
     ObservableList<User> UserOl = FXCollections.observableArrayList(userAl);
     _userIdCol.setCellValueFactory(
@@ -1011,7 +1031,8 @@ public class AdminController
     userTable.setItems(UserOl);
   }
 
-  public void searchUser() {
+  @Override
+  public void searchUser(ActionEvent e) {
     String input = userSearchInput.getText().trim().toLowerCase();
     boolean found = false;
 
@@ -1048,6 +1069,7 @@ public class AdminController
     }
   }
 
+  @Override
   public void assignRole(ActionEvent e) {
     boolean isEmpty = userTable.getSelectionModel().isEmpty();
 
