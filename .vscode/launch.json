@@ -9,6 +9,13 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "main.java.Main",
+      "projectName": "CRS_f3eb2aab"
+    },
+    {
+      "type": "java",
+      "name": "Launch Main",
+      "request": "launch",
+      "mainClass": "main.java.Main",
       "projectName": "tutorial_c31900ef",
       "vmArgs": "--module-path \"C:/Program Files/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.media"
     },
