@@ -6,6 +6,9 @@
 package main.java.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +20,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
+import main.java.entities.Car;
+import main.java.entities.Log;
+import main.java.entities.Order;
 
 /**
  * @author Eugene Tin
@@ -51,19 +57,12 @@ public class CommonMethods {
     if (
       ((Button) (event.getSource())).getId().equals("loginButton") ||
       ((Button) (event.getSource())).getId().equals("returnButton")
-    ) newscene = "Home.fxml";
+    ) newscene = "Admin.fxml";
 
     if (
-      ((Button) (event.getSource())).getId().equals("logoutButton")
-    ) newscene = "Login.fxml";
-    if (
+      ((Button) (event.getSource())).getId().equals("logoutButton") ||
       ((Button) (event.getSource())).getId().equals("registerButton")
     ) newscene = "Login.fxml";
-
-    if (
-      ((Button) (event.getSource())).getId().equals("receiptButton") ||
-      ((Button) (event.getSource())).getId().equals("confirmButton")
-    ) newscene = "Receipt.fxml";
 
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(newscene));
@@ -113,5 +112,47 @@ public class CommonMethods {
       ex.printStackTrace();
     }
     return null;
+  }
+
+  // Sort arraylist by ID in descending order
+  public ArrayList<Car> sortByLatestCar(ArrayList<Car> carAl) {
+    Collections.sort(
+      carAl,
+      new Comparator<Car>() {
+        public int compare(Car c1, Car c2) {
+          return c2.get_id() - c1.get_id();
+        }
+      }
+    );
+
+    return carAl;
+  }
+
+  // Sort arraylist by ID in descending order
+  public ArrayList<Order> sortByLatestOrder(ArrayList<Order> orderAl) {
+    Collections.sort(
+      orderAl,
+      new Comparator<Order>() {
+        public int compare(Order o1, Order o2) {
+          return o2.get_id() - o1.get_id();
+        }
+      }
+    );
+
+    return orderAl;
+  }
+
+  // Sort arraylist by ID in descending order
+  public ArrayList<Log> sortByLatestLog(ArrayList<Log> logAl) {
+    Collections.sort(
+      logAl,
+      new Comparator<Log>() {
+        public int compare(Log l1, Log l2) {
+          return l2.get_id() - l1.get_id();
+        }
+      }
+    );
+
+    return logAl;
   }
 }

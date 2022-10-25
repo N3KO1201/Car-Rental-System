@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.AdminController">
+   <children>
+      <Label alignment="CENTER" prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #073422;" text="Super Car Rental System" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="32.0" />
+         </font>
+      </Label>
+      <TabPane layoutY="100.0" prefHeight="621.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab style="-fx-padding: 4 14;" text="New Listing">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="356.0" layoutY="48.0" prefHeight="520.0" prefWidth="897.0">
+                           <children>
+                              <Label fx:id="homeTitle" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="715.0" style="-fx-text-fill: #073422;" text="Welcome, Eugene" textFill="#073422">
+                                 <font>
+                                    <Font name="Imprint MT Shadow" size="34.0" />
+                                 </font>
+                              </Label>
+                              <Pane layoutX="12.0" layoutY="122.0" prefHeight="277.0" prefWidth="874.0">
+                                 <children>
+                                    <Label layoutX="21.0" layoutY="35.0" prefHeight="19.0" prefWidth="141.0" text="Number Plate">
+                                       <font>
+                                          <Font name="Segoe UI" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="21.0" layoutY="91.0" prefHeight="25.0" prefWidth="142.0" text="Car Model">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="23.0" layoutY="157.0" prefHeight="19.0" prefWidth="140.0" text="Car Brand">
+                                       <font>
+                                          <Font name="Segoe UI" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="24.0" layoutY="217.0" prefHeight="25.0" prefWidth="139.0" text="Model Year">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="405.0" layoutY="35.0" prefHeight="19.0" prefWidth="148.0" text="Rent Cost (RM)">
+                                       <font>
+                                          <Font name="Segoe UI" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="405.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0" text="Description">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="numberPlateInput" layoutX="162.0" layoutY="32.0" prefHeight="28.0" prefWidth="199.0" promptText="1M4U 4317">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="modelInput" layoutX="162.0" layoutY="91.0" prefHeight="28.0" prefWidth="199.0" promptText="Prius">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="brandInput" layoutX="162.0" layoutY="154.0" prefHeight="28.0" prefWidth="199.0" promptText="Toyota">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="yearInput" layoutX="162.0" layoutY="217.0" prefHeight="28.0" prefWidth="201.0" promptText="2018">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label fx:id="numberPlateErr" layoutX="163.0" layoutY="61.0" prefHeight="17.0" prefWidth="196.0" style="-fx-opacity: 0;" text="*Please fill in number plate" textFill="RED" />
+                                    <Label fx:id="modelErr" layoutX="163.0" layoutY="120.0" prefHeight="17.0" prefWidth="196.0" style="-fx-opacity: 0;" text="*Please fill in vehicle model" textFill="RED" />
+                                    <Label fx:id="brandErr" layoutX="163.0" layoutY="183.0" prefHeight="17.0" prefWidth="196.0" style="-fx-opacity: 0;" text="*Please fill in vehicle brand" textFill="RED" />
+                                    <Label fx:id="yearErr" layoutX="163.0" layoutY="246.0" prefHeight="17.0" prefWidth="196.0" style="-fx-opacity: 0;" text="*Invalid model year" textFill="RED" />
+                                    <TextField fx:id="costInput" layoutX="554.0" layoutY="32.0" prefHeight="28.0" prefWidth="220.0" promptText="1000.00">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextArea fx:id="descriptionInput" layoutX="554.0" layoutY="92.0" prefHeight="154.0" prefWidth="221.0" promptText="Condition: like new" wrapText="true">
+                                       <font>
+                                          <Font name="Segoe UI" size="14.0" />
+                                       </font>
+                                    </TextArea>
+                                    <Label fx:id="costErr" layoutX="554.0" layoutY="61.0" prefHeight="17.0" prefWidth="220.0" style="-fx-opacity: 0;" text="*Please fill in correct pricing in RM" textFill="RED" />
+                                    <Label fx:id="descriptionErr" layoutX="553.0" layoutY="246.0" prefHeight="17.0" prefWidth="220.0" style="-fx-opacity: 0;" text="*Please fill in description " textFill="RED" />
+                                 </children>
+                              </Pane>
+                              <Button fx:id="confirmButton" layoutX="642.0" layoutY="455.0" mnemonicParsing="false" onAction="#createListing" prefHeight="35.0" prefWidth="87.0" text="Confirm" />
+                              <Button fx:id="clearButton" layoutX="736.0" layoutY="455.0" mnemonicParsing="false" onAction="#clearInput" prefHeight="35.0" prefWidth="48.0" text="🗑" textFill="RED" />
+                              <Button fx:id="logoutButton" layoutX="729.0" layoutY="23.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="554.0" prefWidth="332.0" style="-fx-background-color: #F0F0F0;">
+                           <children>
+                              <ImageView fitHeight="240.0" fitWidth="295.0" layoutX="19.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/assets/images/ferrari250.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="240.0" fitWidth="295.0" layoutX="19.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/assets/images/rrspectre.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="17.0" layoutY="472.0" prefHeight="18.0" prefWidth="297.0" text="Rolls Royce Spectre" textFill="#073422">
+                                 <font>
+                                    <Font name="Imprint MT Shadow" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="229.0" prefHeight="18.0" prefWidth="297.0" text="Ferrari 250 GTO" textFill="#073422">
+                                 <font>
+                                    <Font name="Imprint MT Shadow" size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-padding: 4 14;" text="View Car Details">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="1271.0">
+                     <children>
+                        <TableView fx:id="listingTable" editable="true" layoutY="86.0" prefHeight="496.0" prefWidth="1280.0">
+                           <columns>
+                              <TableColumn fx:id="_carIdCol" prefWidth="76.0" resizable="false" style="fx-text-alignment: center;" text="Car ID" />
+                              <TableColumn fx:id="plateNumCol" prefWidth="104.0" resizable="false" style="fx-text-alignment: center;" text="Plate No." />
+                              <TableColumn fx:id="modelCol" prefWidth="140.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Car Model" />
+                              <TableColumn fx:id="brandCol" minWidth="0.0" prefWidth="132.0" resizable="false" text="Car Brand" />
+                              <TableColumn fx:id="yearCol" prefWidth="86.0" resizable="false" text="Model Year" />
+                              <TableColumn fx:id="listingCostCol" prefWidth="172.0" resizable="false" text="Rental Cost p.d. (RM)" />
+                              <TableColumn fx:id="descriptionCol" prefWidth="368.0" resizable="false" text="Description" />
+                              <TableColumn fx:id="availabilityCol" prefWidth="88.0" resizable="false" text="Availability" />
+                              <TableColumn fx:id="createdAtCol" prefWidth="113.0" resizable="false" text="Created At" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label fx:id="listingTitle" alignment="CENTER" layoutX="7.0" layoutY="34.0" prefHeight="43.0" prefWidth="129.0" text="Car Listing">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="editButton" layoutX="1092.0" layoutY="43.0" mnemonicParsing="false" onAction="#editListing" prefHeight="25.0" prefWidth="53.0" text="Edit" />
+                        <Button fx:id="deleteButton" layoutX="1154.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteListing" text="Delete" textFill="#ae0000">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="searchButton" layoutX="671.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchListing" text="Search" />
+                        <TextField fx:id="listingSearchInput" layoutX="516.0" layoutY="44.0" prefHeight="25.0" prefWidth="155.0" promptText="Car ID or Plate No." />
+                        <Button fx:id="cancelEditListingButton" layoutX="1154.0" layoutY="44.0" mnemonicParsing="false" onAction="#cancelEditListing" style="visibility: hidden;" text="Cancel">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="confirmEditListingButton" layoutX="1092.0" layoutY="43.0" mnemonicParsing="false" onAction="#confirmEditListing" prefHeight="25.0" prefWidth="53.0" style="visibility: hidden;" text="Save" textFill="#018029" />
+                        <Button fx:id="refreshButton" layoutX="1215.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAllListing" prefHeight="23.0" prefWidth="29.0" text="⟳" textFill="#166522">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-padding: 4 14;" text="View Orders">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="1271.0">
+                     <children>
+                        <TableView fx:id="orderTable" editable="true" layoutY="86.0" prefHeight="496.0" prefWidth="1280.0">
+                           <columns>
+                              <TableColumn fx:id="_orderIdCol" prefWidth="79.0" resizable="false" style="fx-text-alignment: center;" text="Order ID" />
+                              <TableColumn fx:id="clientNameCol" prefWidth="159.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Client Name" />
+                              <TableColumn fx:id="contactCol" prefWidth="140.0" resizable="false" text="Contact Number" />
+                              <TableColumn fx:id="vehicleDetailCol" prefWidth="262.0" resizable="false" text="Vehicle Detail" />
+                              <TableColumn fx:id="orderCostCol" prefWidth="106.0" resizable="false" text="Rental Cost p.d. " />
+                              <TableColumn fx:id="rentalCol" minWidth="0.0" prefWidth="117.0" resizable="false" text="Rental Date" />
+                              <TableColumn fx:id="durationCol" prefWidth="86.0" resizable="false" text="Duration" />
+                              <TableColumn fx:id="paymentCol" prefWidth="79.0" resizable="false" text="Payment " />
+                              <TableColumn fx:id="totalPaymentCol" prefWidth="127.0" resizable="false" text="Total Payment (RM)" />
+                              <TableColumn fx:id="orderStatusCol" prefWidth="122.0" resizable="false" text="Order Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label fx:id="orderTitle" alignment="CENTER" layoutY="34.0" prefHeight="43.0" prefWidth="131.0" text="Order List">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="rejectButton" layoutX="1156.0" layoutY="44.0" mnemonicParsing="false" onAction="#rejectOrder" text="Reject" textFill="#ae0000">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="searchButton2" layoutX="671.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchOrder" text="Search" />
+                        <TextField fx:id="orderSearchInput" layoutX="494.0" layoutY="44.0" prefHeight="25.0" prefWidth="177.0" promptText="Order ID or Contact No." />
+                        <Button fx:id="refreshButton2" layoutX="1215.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAllOrder" prefHeight="23.0" prefWidth="29.0" text="⟳" textFill="#166522">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="approveButton" layoutX="1083.0" layoutY="44.0" mnemonicParsing="false" onAction="#approveOrder" text="Approve" textFill="#073422">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator layoutX="1067.0" layoutY="41.0" orientation="VERTICAL" prefHeight="31.0" prefWidth="8.0" />
+                        <Button fx:id="reportButton" layoutX="952.0" layoutY="44.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Report" textFill="#073422">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-padding: 4 14;" text="Activity Log">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="1271.0">
+                     <children>
+                        <Label fx:id="activityTitle" alignment="CENTER" layoutY="34.0" prefHeight="43.0" prefWidth="147.0" text="Activity Log">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="logTable" editable="true" layoutY="86.0" prefHeight="496.0" prefWidth="1280.0">
+                           <columns>
+                              <TableColumn fx:id="_logIdCol" prefWidth="113.0" resizable="false" style="fx-text-alignment: center;" text="Log ID" />
+                              <TableColumn fx:id="logUserIdCol" resizable="false" style="fx-text-alignment: center;" text="User ID" />
+                              <TableColumn fx:id="logUsernameCol" prefWidth="194.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Username" />
+                              <TableColumn fx:id="logUserRoleCol" prefWidth="81.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="User Role" />
+                              <TableColumn fx:id="logEmailCol" minWidth="0.0" prefWidth="268.0" resizable="false" text="Email" />
+                              <TableColumn fx:id="inTimestampCol" prefWidth="192.0" resizable="false" text="Logged In Timestamp" />
+                              <TableColumn fx:id="offTimestampCol" prefWidth="179.0" resizable="false" text="Logged Off Timestamp" />
+                              <TableColumn fx:id="onlineCol" prefWidth="170.0" resizable="false" text="Online Duration" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="searchButton3" layoutX="671.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchLog" text="Search" />
+                        <TextField fx:id="logSearchInput" layoutX="494.0" layoutY="44.0" prefHeight="25.0" prefWidth="177.0" promptText="User ID or Username" />
+                        <Button fx:id="refreshButton1" layoutX="1215.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAllLog" prefHeight="23.0" prefWidth="29.0" text="⟳" textFill="#166522">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-padding: 4 14;" text="Assign Admin">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="1271.0">
+                     <children>
+                        <TableView fx:id="userTable" editable="true" layoutY="86.0" prefHeight="496.0" prefWidth="1280.0">
+                           <columns>
+                              <TableColumn fx:id="_userIdCol" prefWidth="98.0" resizable="false" style="fx-text-alignment: center;" text="User ID" />
+                              <TableColumn fx:id="usernameCol" prefWidth="289.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Username" />
+                              <TableColumn fx:id="userEmailCol" minWidth="0.0" prefWidth="453.0" resizable="false" text="Email" />
+                              <TableColumn fx:id="userContactCol" prefWidth="277.0" resizable="false" text="Contact Number" />
+                              <TableColumn fx:id="isAdminCol" prefWidth="146.0" resizable="false" text="Is Admin?" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label fx:id="reservationTitle11" alignment="CENTER" layoutY="34.0" prefHeight="43.0" prefWidth="119.0" text="User List">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="receiptButton11" layoutX="1155.0" layoutY="43.0" mnemonicParsing="false" onAction="#assignRole" text="Assign" textFill="#073422" />
+                        <Button fx:id="searchButton4" layoutX="671.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchUser" text="Search" />
+                        <TextField fx:id="userSearchInput" layoutX="494.0" layoutY="44.0" prefHeight="25.0" prefWidth="177.0" promptText="User ID or Username" />
+                        <Button fx:id="refreshButton11" layoutX="1215.0" layoutY="44.0" mnemonicParsing="false" onAction="#viewAllUser" prefHeight="23.0" prefWidth="29.0" text="⟳" textFill="#166522">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
