@@ -18,14 +18,14 @@ public class User implements Serializable {
     String password,
     String email,
     String contact,
-    boolean isAdmin
+    boolean admin
   ) {
     this.set_id(_id);
     this.setUsername(username);
     this.setPassword(password);
     this.setEmail(email);
     this.setContact(contact);
-    this.setAdmin(isAdmin);
+    this.setAdmin(admin);
   }
 
   public User(int _id, String username, String contact) {

@@ -4,6 +4,9 @@
 package main.java.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ListIterator;
@@ -13,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.java.dao.*;
+import main.java.entities.Log;
 import main.java.entities.User;
 import main.java.util.EncryptionService;
 import main.java.util.FileService;
@@ -21,10 +25,12 @@ import main.java.util.ValidationService;
 /**
  * @author Eugene Tin
  */
-public class LoginController extends CommonMethods implements StaffDao {
+public class LoginController extends CommonMethods implements UserDao {
+
+  public static String loggedInUsername;
 
   @FXML
-  TextField usernameInput, passwordInput, confirmPasswordInput;
+  TextField usernameInput, passwordInput, confirmPasswordInput, emailInput, contactInput;
 
   @FXML
   Label usernameErr, usernameExistErr, passwordErr, confirmPasswordErr, registerSuccessLabel;
@@ -44,32 +50,71 @@ public class LoginController extends CommonMethods implements StaffDao {
     boolean foundUser = false;
     String username = usernameInput.getText();
     String password = passwordInput.getText();
-    ListIterator<Staff> li = null;
+    ListIterator<User> li = null;
     try {
       // Retrieve staff data
-      ArrayList<Staff> staffAl = new FileService().readStaffData();
+      ArrayList<User> userAl = new FileService().readUserData();
 
       // loop through staff data and verify username
-      li = staffAl.listIterator();
+      li = userAl.listIterator();
       while (li.hasNext()) {
-        Staff staff = (Staff) li.next();
-        if (staff.getUsername().equals(username)) {
+        User user = (User) li.next();
+        if (user.getUsername().equals(username)) {
           foundUser = true;
 
           // verify staff password
           boolean valid = EncryptionService.verifyUserPassword(
             password,
-            staff.getPassword()
+            user.getPassword()
           );
 
           if (valid) {
+            ArrayList<Log> logAl = new FileService().readLogData();
+            int recentID;
+            String role;
+
+            if (user.isAdmin()) role = "ADMIN"; else role = "CLIENT";
+
+            if (logAl.size() != 0) recentID =
+              logAl
+                .stream()
+                .max(Comparator.comparing(Log::get_id))
+                .get()
+                .get_id() +
+              1; else recentID = 10000000;
+
+            LocalDateTime newTimeStamp = LocalDateTime.now(
+              ZoneId.of("GMT+08:00")
+            );
+            String formattedTimeStamp = newTimeStamp.format(
+              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            );
+
+            Log newLog = new Log(
+              recentID,
+              user.get_id(),
+              user.getUsername(),
+              role,
+              user.getEmail(),
+              formattedTimeStamp,
+              "-"
+            );
+
+            logAl.add(newLog);
+            ArrayList<Log> sortByIDAl = super.sortByLatestLog(logAl);
+            new FileService().writeLogData(sortByIDAl);
+
             // prompt user to home page
             FXMLLoader loader = super.loadButtonScene(e);
-            HomeController homeController = loader.getController();
-            homeController.displayName(username);
+            AdminController adminController = loader.getController();
+            adminController.displayName(username);
+            adminController.viewAllLog();
+            loggedInUsername = username;
 
-            // automatically return checked out room and update room data
-            super.refreshRoomDetails();
+            //
+            System.out.println(
+              "User authentication success, load home page depending on user's authority"
+            );
           } else {
             // set incorrect password label to visible
             passwordErr.setStyle("-fx-opacity: 1");
@@ -93,7 +138,7 @@ public class LoginController extends CommonMethods implements StaffDao {
   @Override
   public void register(ActionEvent e) throws IOException {
     // Read staff data
-    ArrayList<Staff> staffAl = new FileService().readStaffData();
+    ArrayList<User> userAl = new FileService().readUserData();
     // An array to catch validation error
     ArrayList<String> validateRegister = new ArrayList<String>();
 
@@ -102,12 +147,14 @@ public class LoginController extends CommonMethods implements StaffDao {
     String password = passwordInput.getText();
     String confirmPassword = confirmPasswordInput.getText();
     int recentID;
+    String email = emailInput.getText();
+    String contact = contactInput.getText();
 
     // Alert pop up confirmation
     boolean CONFIRMATION = super.appendAlert(
       "Register Confirmation",
       "Registration for username: " + username,
-      "Are you sure to register a new staff account?"
+      "Are you sure to register a new account?"
     );
 
     if (CONFIRMATION) {
@@ -145,20 +192,27 @@ public class LoginController extends CommonMethods implements StaffDao {
       } else {
         // Add new user to database after CONFIRMATION
         // Search for the latest ID and add by 1
-        if (staffAl.size() != 0) recentID =
-          staffAl
+        if (userAl.size() != 0) recentID =
+          userAl
             .stream()
-            .max(Comparator.comparing(Staff::get_id))
+            .max(Comparator.comparing(User::get_id))
             .get()
             .get_id() +
           1; else recentID = 1000;
 
         // Create new instance of staff from Staff entity
-        Staff newStaff = new Staff(recentID, username, password);
+        User newUser = new User(
+          recentID,
+          username,
+          password,
+          email,
+          contact,
+          false
+        );
 
         // Append new staff to existing staff list and update staff data
-        staffAl.add(newStaff);
-        new FileService().writeStaffData(staffAl);
+        userAl.add(newUser);
+        new FileService().writeUserData(userAl);
 
         // Reset UI input
         clearInput();
