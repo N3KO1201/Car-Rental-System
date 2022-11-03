@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.RegisterController">
+   <children>
+      <Label alignment="CENTER" prefHeight="61.0" prefWidth="600.0" style="-fx-background-color: #073422;" text="Register" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="32.0" />
+         </font>
+      </Label>
+      <Pane layoutX="147.0" layoutY="95.0" prefHeight="282.0" prefWidth="306.0">
+         <children>
+            <TextField fx:id="txtName" layoutX="107.0" layoutY="28.0" promptText="Enter username" />
+            <TextField fx:id="txtContact" layoutX="107.0" layoutY="125.0" promptText="012-3456789" />
+            <TextField fx:id="txtMail" layoutX="107.0" layoutY="74.0" promptText="Example@mail.com" />
+            <Label layoutX="34.0" layoutY="32.0" text="Username : " />
+            <Label layoutX="34.0" layoutY="181.0" text="Password : " />
+            <Label layoutX="34.0" layoutY="78.0" prefHeight="17.0" prefWidth="59.0" text="Email :" />
+            <Label layoutX="34.0" layoutY="129.0" text="Contact : " />
+            <TextField fx:id="txtPassword" layoutX="107.0" layoutY="177.0" promptText="******" />
+            <Button fx:id="cBtn" layoutX="63.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleActio" text="Confirm" />
+            <Button fx:id="rBtn" layoutX="181.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Return" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
