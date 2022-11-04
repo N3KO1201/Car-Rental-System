@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" layoutX="-4.0" prefHeight="132.0" prefWidth="1280.0" style="-fx-background-color: Grey;" text="CRS">
          <font>
@@ -24,7 +24,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="562.0" prefWidth="1131.0">
                      <children>
-                        <TableView layoutX="518.0" layoutY="103.0" prefHeight="354.0" prefWidth="701.0">
+                        <TableView fx:id="rentalHistoryTable" layoutX="518.0" layoutY="103.0" prefHeight="354.0" prefWidth="701.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="Car ID" />
                               <TableColumn prefWidth="94.4000244140625" text="Number Plate" />
@@ -42,7 +42,7 @@
                         <Label layoutX="158.0" layoutY="249.0" text="Email" />
                         <Label layoutX="158.0" layoutY="284.0" text="Contact" />
                         <Label layoutX="162.0" layoutY="333.0" text="Points" />
-                        <TextField editable="false" layoutX="219.0" layoutY="175.0" prefHeight="17.0" prefWidth="150.0" />
+                        <TextField fx:id="txtUID" editable="false" layoutX="219.0" layoutY="175.0" prefHeight="17.0" prefWidth="150.0" />
                         <TextField fx:id="txtName" editable="false" layoutX="220.0" layoutY="210.0" />
                         <TextField fx:id="txtEmail" editable="false" layoutX="220.0" layoutY="245.0" />
                         <TextField fx:id="txtContact" editable="false" layoutX="221.0" layoutY="280.0" />
@@ -71,16 +71,16 @@
                         <Label layoutX="75.0" layoutY="355.0" text="Cost" />
                         <Label layoutX="75.0" layoutY="400.0" text="Rent Date" />
                         <Label layoutX="75.0" layoutY="445.0" text="Return Date" />
-                        <DatePicker layoutX="160.0" layoutY="396.0" />
-                        <DatePicker layoutX="160.0" layoutY="441.0" />
-                        <TextField layoutX="160.0" layoutY="81.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="126.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="171.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="216.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="261.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="306.0" prefHeight="26.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="350.0" prefHeight="26.0" prefWidth="175.2" />
-                        <TableView layoutX="443.0" layoutY="115.0" prefHeight="331.0" prefWidth="528.0">
+                        <DatePicker fx:id="startDate" layoutX="160.0" layoutY="396.0" />
+                        <DatePicker fx:id="returnDate" layoutX="160.0" layoutY="441.0" />
+                        <TextField fx:id="carID" layoutX="160.0" layoutY="81.0" prefWidth="175.2" />
+                        <TextField fx:id="plateNum" layoutX="160.0" layoutY="126.0" prefWidth="175.2" />
+                        <TextField fx:id="modelNum" layoutX="160.0" layoutY="171.0" prefWidth="175.2" />
+                        <TextField fx:id="brandNum" layoutX="160.0" layoutY="216.0" prefWidth="175.2" />
+                        <TextField fx:id="year" layoutX="160.0" layoutY="261.0" prefWidth="175.2" />
+                        <TextField fx:id="label" layoutX="160.0" layoutY="306.0" prefHeight="26.0" prefWidth="175.2" />
+                        <TextField fx:id="cost" layoutX="160.0" layoutY="350.0" prefHeight="26.0" prefWidth="175.2" />
+                        <TableView fx:id="availableCarTable" layoutX="443.0" layoutY="115.0" prefHeight="331.0" prefWidth="528.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Car_ID" />
                             <TableColumn prefWidth="75.0" text="Plate No." />
@@ -100,7 +100,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="629.0" layoutY="82.0" prefHeight="331.0" prefWidth="528.0">
+                        <TableView fx:id="carOnRentTable" layoutX="629.0" layoutY="82.0" prefHeight="331.0" prefWidth="528.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="Car_ID" />
                               <TableColumn prefWidth="75.0" text="Plate No." />
@@ -119,6 +119,15 @@
                         <Label layoutX="63.0" layoutY="285.0" text="Duration" />
                         <Label layoutX="62.0" layoutY="400.0" text="Total Payment :" />
                         <Label layoutX="62.0" layoutY="350.0" text="Fine : " />
+                        <Button layoutX="170.0" layoutY="462.0" mnemonicParsing="false" text="Make Payment" />
+                        <Label fx:id="carLbl" layoutX="170.0" layoutY="86.0" text="Label" />
+                        <Label fx:id="numPlateLbl" layoutX="170.0" layoutY="125.0" text="Label" />
+                        <Label fx:id="oidLbl" layoutX="170.0" layoutY="165.0" text="Label" />
+                        <Label fx:id="startDateLbl" layoutX="170.0" layoutY="205.0" text="Label" />
+                        <Label fx:id="returnDateLbl" layoutX="170.0" layoutY="245.0" text="Label" />
+                        <Label fx:id="durationLbl" layoutX="170.0" layoutY="285.0" text="Label" />
+                        <Label fx:id="fineLbl" layoutX="170.0" layoutY="350.0" text="Label" />
+                        <Label fx:id="paymentLbl" layoutX="170.0" layoutY="400.0" text="Label" />
                      </children></AnchorPane>
                </content>
             </Tab>
