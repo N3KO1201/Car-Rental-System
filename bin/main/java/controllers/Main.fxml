@@ -100,7 +100,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="394.0" layoutY="115.0" prefHeight="331.0" prefWidth="528.0">
+                        <TableView layoutX="629.0" layoutY="82.0" prefHeight="331.0" prefWidth="528.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="Car_ID" />
                               <TableColumn prefWidth="75.0" text="Plate No." />
@@ -111,51 +111,19 @@
                               <TableColumn prefWidth="75.0" text="Availability" />
                            </columns>
                         </TableView>
+                        <Label layoutX="62.0" layoutY="85.0" prefHeight="18.0" prefWidth="69.0" text="Car ID" />
+                        <Label layoutX="62.0" layoutY="125.0" text="Num PLate" />
+                        <Label layoutX="62.0" layoutY="165.0" text="Order ID " />
+                        <Label layoutX="62.0" layoutY="205.0" text="Start Date" />
+                        <Label layoutX="62.0" layoutY="245.0" text="Return Date" />
+                        <Label layoutX="63.0" layoutY="285.0" text="Duration" />
+                        <Label layoutX="62.0" layoutY="400.0" text="Total Payment :" />
+                        <Label layoutX="62.0" layoutY="350.0" text="Fine : " />
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab closable="false" disable="true" text="Edit">
-              <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="561.6" prefWidth="1280.0">
-                     <children>
-                        <Label layoutX="75.0" layoutY="85.0" text="Car ID" />
-                        <Label layoutX="75.0" layoutY="130.0" text="Plate No." />
-                        <Label layoutX="75.0" layoutY="175.0" text="Model" />
-                        <Label layoutX="75.0" layoutY="220.0" text="Brand" />
-                        <Label layoutX="75.0" layoutY="265.0" text="Year" />
-                        <Label layoutX="75.0" layoutY="310.0" text="Label" />
-                        <Label layoutX="75.0" layoutY="355.0" text="Cost" />
-                        <Label layoutX="75.0" layoutY="400.0" text="Rent Date" />
-                        <Label layoutX="75.0" layoutY="445.0" text="Return Date" />
-                        <DatePicker layoutX="160.0" layoutY="396.0" />
-                        <DatePicker layoutX="160.0" layoutY="441.0" />
-                        <TextField layoutX="160.0" layoutY="81.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="126.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="171.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="216.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="261.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="306.0" prefHeight="26.0" prefWidth="175.2" />
-                        <TextField layoutX="160.0" layoutY="350.0" prefHeight="26.0" prefWidth="175.2" />
-                        <TableView layoutX="443.0" layoutY="115.0" prefHeight="331.0" prefWidth="528.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="Car_ID" />
-                              <TableColumn prefWidth="75.0" text="Plate No." />
-                              <TableColumn prefWidth="75.0" text="Model" />
-                              <TableColumn prefWidth="75.0" text="Brand" />
-                              <TableColumn prefWidth="75.0" text="Year" />
-                              <TableColumn prefWidth="75.0" text="Cost (RM)" />
-                              <TableColumn prefWidth="75.0" text="Availability" />
-                           </columns>
-                        </TableView>
-                        <Button layoutX="369.0" layoutY="215.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.6" text="Add" />
-                        <Button layoutX="369.0" layoutY="260.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.6" text="Clear" />
-                        <Button layoutX="369.0" layoutY="307.0" mnemonicParsing="false" prefWidth="53.6" text="Delete" />
-                        <Button layoutX="369.0" layoutY="351.0" mnemonicParsing="false" text="Modify" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
          </tabs>
       </TabPane>
+      <Button fx:id="adminButton" layoutX="40.0" layoutY="54.0" mnemonicParsing="false" text="Admin" />
    </children>
 </AnchorPane>

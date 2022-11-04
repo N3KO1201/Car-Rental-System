@@ -18,8 +18,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.entities.User;
+import main.java.util.FileService;
 
-public class RegisterController {
+public class RegisterController extends CommonMethods {
 
     @FXML
     private Button regBtn;
@@ -62,6 +63,10 @@ public class RegisterController {
         clear();
     }
 
+    public RegisterController() {
+        super();
+    }
+
     @FXML
     public void register(ActionEvent event) throws IOException {
         User tempUser = new User(idGenerator(), txtName.getText(), txtPassword.getText(), txtMail.getText(),
@@ -70,13 +75,14 @@ public class RegisterController {
         JOptionPane.showConfirmDialog(null, "Returning to Login Page");
 
         // add data to userfile
-
+        new FileService()   
         // return to Login page
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        super.loadButtonScene(event);
+    }
+
+    @FXML
+    public void back(ActionEvent event) throws IOException {
+        super.loadButtonScene(event);
     }
 
 }
