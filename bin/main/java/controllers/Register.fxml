@@ -17,7 +17,7 @@
       </Label>
       <Pane layoutX="-2.0" layoutY="81.0" prefHeight="271.0" prefWidth="600.0">
          <children>
-            <Label fx:id="passwordErr" layoutX="448.0" layoutY="144.0" text="*Password length &gt;= 6" textFill="RED" />
+            <Label fx:id="passwordErr" layoutX="448.0" layoutY="144.0" opacity="0.0" text="*Password length &gt;= 6" textFill="RED" />
             <TextField fx:id="txtName" layoutX="268.0" layoutY="20.0" prefHeight="25.0" prefWidth="165.0" promptText="Enter username" />
             <TextField fx:id="txtContact" layoutX="268.0" layoutY="100.0" prefHeight="25.0" prefWidth="165.0" promptText="012-3456789" />
             <TextField fx:id="txtMail" layoutX="268.0" layoutY="60.0" prefHeight="25.0" prefWidth="165.0" promptText="Example@mail.com" />
@@ -31,9 +31,9 @@
             <PasswordField fx:id="txtPassword" layoutX="268.0" layoutY="140.0" prefHeight="25.0" prefWidth="165.0" promptText="******" />
             <Label layoutX="140.0" layoutY="184.0" prefHeight="17.0" prefWidth="106.0" text="Confirm Password : " />
             <PasswordField fx:id="txtPassC" layoutX="268.0" layoutY="180.0" prefHeight="25.0" prefWidth="165.0" promptText="******" />
-            <Label fx:id="usernameErr" layoutX="448.0" layoutY="24.0" text="*Invalid length" textFill="RED" />
-            <Label fx:id="mailErr" layoutX="448.0" layoutY="64.0" text="*Email Error" textFill="RED" />
-            <Label fx:id="confirmPasswordErr" layoutX="448.0" layoutY="184.0" text="*Password mismatch" textFill="RED" />
+            <Label fx:id="usernameErr" layoutX="448.0" layoutY="24.0" opacity="0.0" text="*Invalid length" textFill="RED" />
+            <Label fx:id="mailErr" layoutX="448.0" layoutY="64.0" opacity="0.0" text="*Email Error" textFill="RED" />
+            <Label fx:id="confirmPasswordErr" layoutX="448.0" layoutY="184.0" opacity="0.0" text="*Password mismatch" textFill="RED" />
          </children>
       </Pane>
    </children>

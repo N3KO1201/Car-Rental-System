@@ -24,7 +24,7 @@ public class ValidationService {
     // Retrieve staff objects from database
     // ArrayList<User> userAl = new FileService().readUserData();
     ArrayList<String> error = new ArrayList<String>();
-    boolean userExist = false;
+    // boolean userExist = false;
 
     // validate username length
     if (username.length() < 3)
