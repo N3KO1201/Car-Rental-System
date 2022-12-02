@@ -7,8 +7,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JOptionPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -134,12 +137,110 @@ public class UserController
     @FXML
     private TextField year;
 
+    @FXML
+    private TableColumn<Order, Integer> pOrderID;
+
+    @FXML
+    private TableColumn<Order, Integer> pDuration;
+
+    @FXML
+    private TableColumn<Order, String> pVehicleDetail;
+
+    @FXML
+    private TableColumn<Order, String> pNumPlate;
+
+    @FXML
+    private TableColumn<Order, Double> pCost;
+
+    @FXML
+    private TableColumn<Order, LocalDate> pRentDate;
+
+    @FXML
+    private TableColumn<Order, LocalDate> pReturnDate;
+
+    @FXML
+    private TableColumn<Order, Double> pTotal;
+
+    @FXML
+    private TableColumn<Order, String> pStatus;
+
+    @FXML
+    private Button pSaveBtn;
+
     SimpleDateFormat dcn = new SimpleDateFormat("dd-MM-yyyy");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    public void populateAllTable() {
+        showProfile(LoginController.loggedInUsername);
+        populateCarListing();
+    }
 
     /*
      * Profile page
      */
+    public void showProfile(String username) {
+
+        ArrayList<User> userAl = new FileService().readUserData();
+        ListIterator<User> userLi = userAl.listIterator();
+        ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+        ArrayList<Order> newOrderAl = new ArrayList<Order>();
+
+        while (userLi.hasNext()) {
+
+            User user = (User) userLi.next();
+            if (user.getUsername().equals(username)) {
+                txtUID.setText(String.valueOf(user.get_id()));
+                txtName.setText(username);
+                txtEmail.setText(user.getEmail());
+                txtContact.setText(user.getContact());
+
+                while (orderLi.hasNext()) {
+                    Order order = (Order) orderLi.next();
+                    if (order.getClientName().equals(username)) {
+                        newOrderAl.add(order);
+                    }
+                }
+                break;
+            }
+        }
+        populateRentTable(newOrderAl);
+    }
+
+    // method to populate table
+
+    public void populateRentTable(ArrayList orderAl) {
+        ObservableList<Order> OrderOl = FXCollections.observableArrayList(orderAl);
+
+        pOrderID.setCellValueFactory(
+                new PropertyValueFactory<Order, Integer>("_id"));
+        // * Plate Num
+        // pNumPlate.setCellValueFactory(
+        // new PropertyValueFactory<Order, String>("plateNum"));
+        // * Order VehicleDetail
+        pVehicleDetail.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("vehicle"));
+        // * Order CostpDay
+        pCost.setCellValueFactory(
+                new PropertyValueFactory<Order, Double>("cost"));
+        // * Order rent start date
+        pRentDate.setCellValueFactory(
+                new PropertyValueFactory<Order, LocalDate>("rentOn"));
+        // * Order return date
+        pReturnDate.setCellValueFactory(
+                new PropertyValueFactory<Order, LocalDate>("returnOn"));
+        // *duration
+        pDuration.setCellValueFactory(
+                new PropertyValueFactory<Order, Integer>("duration"));
+
+        pTotal.setCellValueFactory(
+                new PropertyValueFactory<Order, Double>("totalCost"));
+
+        pStatus.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("orderStatus"));
+        // * Set table data
+        rentalHistoryTable.setItems(OrderOl);
+    }
 
     // allow profile editing
     @FXML
@@ -147,6 +248,7 @@ public class UserController
         txtName.setEditable(true);
         txtEmail.setEditable(true);
         txtContact.setEditable(true);
+        pSaveBtn.setDisable(false);
     }
 
     // Cancel profile edit and return to view only
@@ -155,6 +257,7 @@ public class UserController
         txtName.setEditable(false);
         txtEmail.setEditable(false);
         txtContact.setEditable(false);
+        pSaveBtn.setDisable(true);
     }
 
     // Save Changes
@@ -165,28 +268,77 @@ public class UserController
          * readfile fetch user data
          * 
          */
+        String newName = txtName.getText();
+        String newEmail = txtEmail.getText();
+        String newContact = txtContact.getText();
 
-        String uid = txtUID.getText();
-        String name = txtName.getText();
-        String email = txtEmail.getText();
-        String contact = txtContact.getText();
+        ArrayList<User> userAl = new FileService().readUserData();
+        ListIterator<User> userLi = userAl.listIterator();
 
-        /*
-         * TO DO
-         * store user data
-         */
-
+        while (userLi.hasNext()) {
+            User user = (User) userLi.next();
+            if (user.getUsername().equals(LoginController.loggedInUsername))
+                user.setUsername(newName);
+            user.setEmail(newEmail);
+            user.setContact(newContact);
+        }
+        new FileService().writeUserData(userAl);
+        txtName.setEditable(false);
+        txtEmail.setEditable(false);
+        txtContact.setEditable(false);
+        pSaveBtn.setDisable(true);
+        appendAlert("Information", "Update Successful", "Items have been updated!");
     }
 
     /*
      * rent page
      */
 
+    // prepares listing table for rent
+    public void populateCarListing() {
+        ArrayList<Car> sortByIDAl = super.sortByLatestCar(new FileService().readCarData());
+        ListIterator<Car> carLi = sortByIDAl.listIterator();
+        ArrayList<Car> availableCarAl = new ArrayList<Car>();
+
+        while (carLi.hasNext()) {
+            Car car = (Car) carLi.next();
+            if (car.isAvailable()) {
+                availableCarAl.add(car);
+            }
+        }
+        ObservableList<Car> carOl = FXCollections.observableArrayList(availableCarAl);
+        rentCarId.setCellValueFactory(
+                new PropertyValueFactory<Car, Integer>("_id"));
+        // * Plate Num
+        rentPlateNumCol.setCellValueFactory(
+                new PropertyValueFactory<Car, String>("plateNum"));
+
+        // * Car Model
+        rentModelCol.setCellValueFactory(
+                new PropertyValueFactory<Car, String>("model"));
+        // * Car Brand
+        rentBrandCol.setCellValueFactory(
+                new PropertyValueFactory<Car, String>("brand"));
+        // * Car Model Year
+        rentYearCol.setCellValueFactory(new PropertyValueFactory<Car, Integer>("year"));
+
+        // * Car Cost p.d.
+        rentCostCol.setCellValueFactory(
+                new PropertyValueFactory<Car, Double>("cost"));
+        // * Car Availability
+        rentCarStatus.setCellValueFactory(
+                new PropertyValueFactory<Car, Boolean>("available"));
+
+        availableCarTable.setItems(carOl);
+
+    }
+
     // Trying to make selected row autopopulate the textbox
+
+    // DO ROW SELECT TO AUTO POPULATE
     @FXML
     public void rentRowSelected(ActionEvent event) {
-        TableView<Car> table = new TableView<>();
-        table.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        availableCarTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 carID.setText(Integer.toString(newVal.get_id()));
                 plateNum.setText(newVal.getPlateNum());
@@ -238,40 +390,6 @@ public class UserController
         } catch (Exception E) {
             System.out.println(E);
         }
-    }
-
-    // prepares listing table for rent
-    public void viewCarListing(ArrayList<Car> carAl) {
-        ArrayList<Car> sortByIDAl = super.sortByLatestCar(new FileService().readCarData());
-        ObservableList<Car> carOl = FXCollections.observableArrayList(sortByIDAl);
-
-        // to do - add filter availability
-
-        // * Car ID Column
-        rentCarId.setCellValueFactory(
-                new PropertyValueFactory<Car, Integer>("_id"));
-        // * Plate Num
-        rentPlateNumCol.setCellValueFactory(
-                new PropertyValueFactory<Car, String>("plateNum"));
-
-        // * Car Model
-        rentModelCol.setCellValueFactory(
-                new PropertyValueFactory<Car, String>("model"));
-        // * Car Brand
-        rentBrandCol.setCellValueFactory(
-                new PropertyValueFactory<Car, String>("brand"));
-        // * Car Model Year
-        rentYearCol.setCellValueFactory(new PropertyValueFactory<Car, Integer>("year"));
-
-        // * Car Cost p.d.
-        rentCostCol.setCellValueFactory(
-                new PropertyValueFactory<Car, Double>("cost"));
-        // * Car Availability
-        rentCarStatus.setCellValueFactory(
-                new PropertyValueFactory<Car, Boolean>("available"));
-
-        // * Set table data
-        availableCarTable.setItems(carOl);
     }
 
     /*

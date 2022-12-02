@@ -28,6 +28,7 @@ import main.java.util.ValidationService;
 public class LoginController extends CommonMethods implements UserDao {
 
   public static String loggedInUsername;
+  public static boolean isAdmin;
 
   @FXML
   TextField usernameInput, passwordInput, confirmPasswordInput, emailInput, contactInput;
@@ -42,6 +43,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Verify login user onButtonAction
+   * 
    * @param ActionEvent retrieve user inputs and button clicked
    * @throws IOException
    */
@@ -64,57 +66,65 @@ public class LoginController extends CommonMethods implements UserDao {
 
           // verify staff password
           boolean valid = EncryptionService.verifyUserPassword(
-            password,
-            user.getPassword()
-          );
+              password,
+              user.getPassword());
 
           if (valid) {
             ArrayList<Log> logAl = new FileService().readLogData();
             int recentID;
             String role;
 
-            if (user.isAdmin()) role = "ADMIN"; else role = "CLIENT";
+            if (user.isAdmin())
+              role = "ADMIN";
+            else
+              role = "CLIENT";
 
-            if (logAl.size() != 0) recentID =
-              logAl
-                .stream()
-                .max(Comparator.comparing(Log::get_id))
-                .get()
-                .get_id() +
-              1; else recentID = 10000000;
+            if (logAl.size() != 0)
+              recentID = logAl
+                  .stream()
+                  .max(Comparator.comparing(Log::get_id))
+                  .get()
+                  .get_id() +
+                  1;
+            else
+              recentID = 10000000;
 
             LocalDateTime newTimeStamp = LocalDateTime.now(
-              ZoneId.of("GMT+08:00")
-            );
+                ZoneId.of("GMT+08:00"));
             String formattedTimeStamp = newTimeStamp.format(
-              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            );
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
             Log newLog = new Log(
-              recentID,
-              user.get_id(),
-              user.getUsername(),
-              role,
-              user.getEmail(),
-              formattedTimeStamp,
-              "-"
-            );
+                recentID,
+                user.get_id(),
+                user.getUsername(),
+                role,
+                user.getEmail(),
+                formattedTimeStamp,
+                "-");
 
             logAl.add(newLog);
             ArrayList<Log> sortByIDAl = super.sortByLatestLog(logAl);
             new FileService().writeLogData(sortByIDAl);
 
+            loggedInUsername = username;
+            isAdmin = user.isAdmin();
+
             // prompt user to home page
             FXMLLoader loader = super.loadButtonScene(e);
-            AdminController adminController = loader.getController();
-            adminController.displayName(username);
-            adminController.viewAllLog();
-            loggedInUsername = username;
+            if (user.isAdmin()) {
+              AdminController adminController = loader.getController();
+              adminController.displayName(username);
+              adminController.viewAllLog();
+            } else {
+              UserController userController = loader.getController();
+              // userController.showProfile(username);
+              userController.populateAllTable();
+            }
 
             //
             System.out.println(
-              "User authentication success, load home page depending on user's authority"
-            );
+                "User authentication success, load home page depending on user's authority");
           } else {
             // set incorrect password label to visible
             passwordErr.setStyle("-fx-opacity: 1");
@@ -122,9 +132,11 @@ public class LoginController extends CommonMethods implements UserDao {
         }
       }
       // set incorrect username label to visible
-      if (!foundUser) usernameErr.setStyle(
-        "-fx-opacity: 1"
-      ); else usernameErr.setStyle("-fx-opacity: 0");
+      if (!foundUser)
+        usernameErr.setStyle(
+            "-fx-opacity: 1");
+      else
+        usernameErr.setStyle("-fx-opacity: 0");
     } catch (Exception err) {
       err.printStackTrace();
     }
@@ -132,6 +144,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Register new staff onButtonAction
+   * 
    * @param ActionEvent retrieve user inputs and button clicked
    * @throws IOException
    */
@@ -152,10 +165,9 @@ public class LoginController extends CommonMethods implements UserDao {
 
     // Alert pop up confirmation
     boolean CONFIRMATION = super.appendAlert(
-      "Register Confirmation",
-      "Registration for username: " + username,
-      "Are you sure to register a new account?"
-    );
+        "Register Confirmation",
+        "Registration for username: " + username,
+        "Are you sure to register a new account?");
 
     if (CONFIRMATION) {
       // Error label reset
@@ -165,9 +177,8 @@ public class LoginController extends CommonMethods implements UserDao {
       confirmPasswordErr.setStyle("-fx-opacity: 0");
 
       // add validation errors
-      validateRegister =
-        new ValidationService()
-        .registerValidation(username, password, confirmPassword);
+      validateRegister = new ValidationService()
+          .registerValidation(username, password, confirmPassword);
 
       // If error exist
       if (validateRegister.size() != 0) {
@@ -192,23 +203,24 @@ public class LoginController extends CommonMethods implements UserDao {
       } else {
         // Add new user to database after CONFIRMATION
         // Search for the latest ID and add by 1
-        if (userAl.size() != 0) recentID =
-          userAl
-            .stream()
-            .max(Comparator.comparing(User::get_id))
-            .get()
-            .get_id() +
-          1; else recentID = 1000;
+        if (userAl.size() != 0)
+          recentID = userAl
+              .stream()
+              .max(Comparator.comparing(User::get_id))
+              .get()
+              .get_id() +
+              1;
+        else
+          recentID = 1000;
 
         // Create new instance of staff from Staff entity
         User newUser = new User(
-          recentID,
-          username,
-          password,
-          email,
-          contact,
-          false
-        );
+            recentID,
+            username,
+            password,
+            email,
+            contact,
+            false);
 
         // Append new staff to existing staff list and update staff data
         userAl.add(newUser);
@@ -247,6 +259,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Prompt user to register page onLinkAction
+   * 
    * @param ActionEvent retrieve hyperlink ID
    */
   public void registerPage(ActionEvent e) {
@@ -255,6 +268,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Prompt user to register page onLinkAction
+   * 
    * @param ActionEvent retrieve hyperlink ID
    */
   public void loginPage(ActionEvent e) {
