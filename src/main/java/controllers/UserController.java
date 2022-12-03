@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import main.java.dao.UserDao;
 import main.java.entities.Car;
 import main.java.entities.Order;
@@ -336,18 +338,33 @@ public class UserController
     // Trying to make selected row autopopulate the textbox
 
     // DO ROW SELECT TO AUTO POPULATE
+
     @FXML
     public void rentRowSelected(ActionEvent event) {
-        availableCarTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                carID.setText(Integer.toString(newVal.get_id()));
-                plateNum.setText(newVal.getPlateNum());
-                modelNum.setText(newVal.getModel());
-                brandTxt.setText(newVal.getBrand());
-                year.setText(Integer.toString(newVal.getYear()));
-                cost.setText(Double.toString(newVal.getCost()));
+
+        availableCarTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
+                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
+                modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
+                brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
+                year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
+                cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
             }
         });
+
+        // availableCarTable.getSelectionModel().selectedItemProperty().addListener((obs,
+        // oldVal, newVal) -> {
+        // if (newVal != null) {
+        // carID.setText(Integer.toString(newVal.get_id()));
+        // plateNum.setText(newVal.getPlateNum());
+        // modelNum.setText(newVal.getModel());
+        // brandTxt.setText(newVal.getBrand());
+        // year.setText(Integer.toString(newVal.getYear()));
+        // cost.setText(Double.toString(newVal.getCost()));
+        // }
+        // });
     }
 
     // rent conform to send request
@@ -399,7 +416,6 @@ public class UserController
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-
     }
 
     @Override

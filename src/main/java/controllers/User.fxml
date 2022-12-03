@@ -93,7 +93,7 @@
                         </TableView>
                         <Button layoutX="365.0" layoutY="216.0" mnemonicParsing="false" text="Request" />
                         <Button layoutX="365.0" layoutY="260.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Clear" />
-                        <TextArea layoutX="54.0" layoutY="514.0" prefHeight="87.0" prefWidth="310.0" text="1. Pick rent date and return date.&#10;2. The Car list will filter available cars based on days&#10;3. Select the desired car from the table.&#10;4. Click request to make a request" />
+                        <TextArea layoutX="65.0" layoutY="472.0" prefHeight="79.0" prefWidth="310.0" text="1. Pick rent date and return date.&#10;2. The Car list will filter available cars based on days&#10;3. Select the desired car from the table.&#10;4. Click request to make a request" />
                         <Label layoutX="871.0" layoutY="72.0" text="Available List" />
                         <Label layoutX="65.0" layoutY="175.0" text="Duration" />
                         <TextField fx:id="durationTxt" editable="false" layoutX="160.0" layoutY="170.0" prefHeight="26.0" prefWidth="174.0" />
@@ -102,17 +102,17 @@
             </Tab>
             <Tab closable="false" text="Return Car">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="1280.0">
                      <children>
-                        <TableView fx:id="carOnRentTable" layoutX="629.0" layoutY="82.0" prefHeight="331.0" prefWidth="528.0">
+                        <TableView fx:id="carOnRentTable" layoutX="482.0" layoutY="79.0" prefHeight="331.0" prefWidth="697.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="Car_ID" />
+                              <TableColumn prefWidth="75.0" text="Order_ID" />
                               <TableColumn prefWidth="75.0" text="Plate No." />
-                              <TableColumn prefWidth="75.0" text="Model" />
-                              <TableColumn prefWidth="75.0" text="Brand" />
-                              <TableColumn prefWidth="75.0" text="Year" />
-                              <TableColumn prefWidth="75.0" text="Cost (RM)" />
-                              <TableColumn prefWidth="75.0" text="Availability" />
+                              <TableColumn prefWidth="109.5999755859375" text="Vehicle Detail" />
+                              <TableColumn prefWidth="75.20001220703125" text="Brand" />
+                              <TableColumn prefWidth="75.20001220703125" text="Year" />
+                              <TableColumn prefWidth="77.5999755859375" text="Cost (RM)" />
+                              <TableColumn prefWidth="118.40008544921875" text="Status" />
                            </columns>
                         </TableView>
                         <Label layoutX="62.0" layoutY="85.0" prefHeight="18.0" prefWidth="69.0" text="Car ID" />
