@@ -365,7 +365,15 @@ public class UserController
 
     }
 
+    // please help here need to make duration appear in teext field
+    public void duration(ActionEvent event) {
+        System.out.println(startDate.getValue());
+        System.out.println(returnDate.getValue());
+        calcDuration(startDate.getValue(), returnDate.getValue());
+    }
+
     // Calculates rent duration
+
     public void calcDuration(LocalDate startDate, LocalDate returnDate) {
         String date1 = dcn.format(startDate);
         String date2 = dcn.format(returnDate);
