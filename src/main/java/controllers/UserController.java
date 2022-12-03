@@ -170,6 +170,30 @@ public class UserController
     @FXML
     private Button pSaveBtn;
 
+    @FXML
+    private TableColumn<Order, Integer> rOrderID;
+
+    @FXML
+    private TableColumn<Order, String> rVehicleDetail;
+
+    @FXML
+    private TableColumn<Order, String> rNumPlate;
+
+    @FXML
+    private TableColumn<Order, Double> rCost;
+
+    @FXML
+    private TableColumn<Order, LocalDate> rRentDate;
+
+    @FXML
+    private TableColumn<Order, LocalDate> rReturnDate;
+
+    @FXML
+    private TableColumn<Order, Double> rTotal;
+
+    @FXML
+    private TableColumn<Order, String> rStatus;
+
     SimpleDateFormat dcn = new SimpleDateFormat("dd-MM-yyyy");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -405,6 +429,37 @@ public class UserController
     /*
      * return car page
      */
+
+    public void populateReturnTable(ArrayList orderAl) {
+        ObservableList<Order> OrderOl = FXCollections.observableArrayList(orderAl);
+
+        rOrderID.setCellValueFactory(
+                new PropertyValueFactory<Order, Integer>("_id"));
+        // * Plate Num
+        // pNumPlate.setCellValueFactory(
+        // new PropertyValueFactory<Order, String>("plateNum"));
+        // * Order VehicleDetail
+        rVehicleDetail.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("vehicle"));
+        // * Order CostpDay
+        rCost.setCellValueFactory(
+                new PropertyValueFactory<Order, Double>("cost"));
+        // * Order rent start date
+        rRentDate.setCellValueFactory(
+                new PropertyValueFactory<Order, LocalDate>("rentOn"));
+        // * Order return date
+        rReturnDate.setCellValueFactory(
+                new PropertyValueFactory<Order, LocalDate>("returnOn"));
+
+        rTotal.setCellValueFactory(
+                new PropertyValueFactory<Order, Double>("totalCost"));
+
+        pStatus.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("orderStatus"));
+        // * Set table data
+        rentalHistoryTable.setItems(OrderOl);
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
