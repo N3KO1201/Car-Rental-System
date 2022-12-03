@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.JOptionPane;
 
 import javafx.collections.FXCollections;
@@ -335,41 +336,9 @@ public class UserController
 
     }
 
-    // Trying to make selected row autopopulate the textbox
-
-    // DO ROW SELECT TO AUTO POPULATE
-
+    // rent confirm to send request
     @FXML
-    public void rentRowSelected(ActionEvent event) {
-
-        availableCarTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
-                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
-                modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
-                brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
-                year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
-                cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
-            }
-        });
-
-        // availableCarTable.getSelectionModel().selectedItemProperty().addListener((obs,
-        // oldVal, newVal) -> {
-        // if (newVal != null) {
-        // carID.setText(Integer.toString(newVal.get_id()));
-        // plateNum.setText(newVal.getPlateNum());
-        // modelNum.setText(newVal.getModel());
-        // brandTxt.setText(newVal.getBrand());
-        // year.setText(Integer.toString(newVal.getYear()));
-        // cost.setText(Double.toString(newVal.getCost()));
-        // }
-        // });
-    }
-
-    // rent conform to send request
-    @FXML
-    public void rentRequest() {
+    public void rentRequest(ActionEvent event) {
         String car_id = carID.getText();
         String plate_num = plateNum.getText();
         String model_num = modelNum.getText();
@@ -388,9 +357,11 @@ public class UserController
         // calculate duration
         calcDuration(startDate.getValue(), returnDate.getValue());
 
-        Order order = new Order(0, null, null, null, 0, sDate, rDate, false);
-
         // To add : update order list
+        ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+
+        Order order = new Order(0, costPerDay, date1, date2, 0, sDate, rDate, false);
 
     }
 
@@ -409,6 +380,20 @@ public class UserController
         }
     }
 
+    public void clearRentText(ActionEvent event) {
+        // startDate.setPromptText("Choose rental date");
+        startDate.setValue(null);
+        // returnDate.setPromptText("Choose return date");
+        returnDate.setValue(null);
+        durationTxt.setText(null);
+        carID.setText(null);
+        plateNum.setText(null);
+        modelNum.setText(null);
+        brandTxt.setText(null);
+        year.setText(null);
+        cost.setText(null);
+    }
+
     /*
      * return car page
      */
@@ -416,6 +401,17 @@ public class UserController
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
+        availableCarTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
+                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
+                modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
+                brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
+                year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
+                cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
+            }
+        });
     }
 
     @Override
