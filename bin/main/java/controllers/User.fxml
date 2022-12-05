@@ -104,34 +104,33 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="1280.0">
                      <children>
-                        <TableView fx:id="carOnRentTable" layoutX="482.0" layoutY="79.0" prefHeight="331.0" prefWidth="697.0">
+                        <TableView fx:id="carOnRentTable" layoutX="498.0" layoutY="79.0" prefHeight="331.0" prefWidth="643.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="Order_ID" />
-                              <TableColumn prefWidth="75.0" text="Plate No." />
-                              <TableColumn prefWidth="109.5999755859375" text="Vehicle Detail" />
-                              <TableColumn prefWidth="75.20001220703125" text="Brand" />
-                              <TableColumn prefWidth="75.20001220703125" text="Year" />
-                              <TableColumn prefWidth="77.5999755859375" text="Cost (RM)" />
-                              <TableColumn prefWidth="118.40008544921875" text="Status" />
+                              <TableColumn fx:id="rOrderID" prefWidth="75.0" text="Order_ID" />
+                              <TableColumn fx:id="rPlateNum" prefWidth="75.0" text="Plate No." />
+                              <TableColumn fx:id="rVehicleDetail" prefWidth="109.5999755859375" text="Vehicle Detail" />
+                              <TableColumn fx:id="rCost" prefWidth="77.5999755859375" text="Cost (RM)" />
+                              <TableColumn fx:id="rRentDate" prefWidth="75.0" text="Start Date" />
+                              <TableColumn fx:id="rReturnDate" prefWidth="75.0" text="Return Date" />
+                              <TableColumn fx:id="rStatus" prefWidth="78.4000244140625" text="Status" />
+                              <TableColumn fx:id="rTotal" prefWidth="75.0" text="Total" />
                            </columns>
                         </TableView>
-                        <Label layoutX="62.0" layoutY="85.0" prefHeight="18.0" prefWidth="69.0" text="Car ID" />
+                        <Label layoutX="62.0" layoutY="85.0" prefHeight="18.0" prefWidth="69.0" text="Order ID" />
                         <Label layoutX="62.0" layoutY="125.0" text="Num PLate" />
-                        <Label layoutX="62.0" layoutY="165.0" text="Order ID " />
+                        <Label layoutX="62.0" layoutY="165.0" text="Vehicle Detail" />
                         <Label layoutX="62.0" layoutY="205.0" text="Start Date" />
                         <Label layoutX="62.0" layoutY="245.0" text="Return Date" />
                         <Label layoutX="63.0" layoutY="285.0" text="Duration" />
                         <Label layoutX="62.0" layoutY="400.0" text="Total Payment :" />
-                        <Label layoutX="62.0" layoutY="350.0" text="Fine : " />
                         <Button layoutX="170.0" layoutY="462.0" mnemonicParsing="false" text="Make Payment" />
-                        <Label fx:id="carLbl" layoutX="170.0" layoutY="86.0" text="Label" />
-                        <Label fx:id="numPlateLbl" layoutX="170.0" layoutY="125.0" text="Label" />
-                        <Label fx:id="oidLbl" layoutX="170.0" layoutY="165.0" text="Label" />
-                        <Label fx:id="startDateLbl" layoutX="170.0" layoutY="205.0" text="Label" />
-                        <Label fx:id="returnDateLbl" layoutX="170.0" layoutY="245.0" text="Label" />
-                        <Label fx:id="durationLbl" layoutX="170.0" layoutY="285.0" text="Label" />
-                        <Label fx:id="fineLbl" layoutX="170.0" layoutY="350.0" text="Label" />
-                        <Label fx:id="paymentLbl" layoutX="170.0" layoutY="400.0" text="Label" />
+                        <Label fx:id="orderLbl" layoutX="170.0" layoutY="86.0" text="Select from table" />
+                        <Label fx:id="numPlateLbl" layoutX="170.0" layoutY="125.0" text="Select from table" />
+                        <Label fx:id="vehicleLbl" layoutX="170.0" layoutY="165.0" text="Select from table" />
+                        <Label fx:id="startDateLbl" layoutX="170.0" layoutY="205.0" text="Select from table" />
+                        <Label fx:id="returnDateLbl" layoutX="170.0" layoutY="245.0" text="Select from table" />
+                        <Label fx:id="durationLbl" layoutX="170.0" layoutY="285.0" text="Select from table" />
+                        <Label fx:id="totalPaymentLbl" layoutX="170.0" layoutY="400.0" text="Select from table" />
                      </children></AnchorPane>
                </content>
             </Tab>

@@ -40,90 +40,6 @@ public class UserController
 
     @FXML
     private Button adminButton;
-    // rent page table
-    @FXML
-    private TableView<Car> availableCarTable;
-
-    @FXML
-    private TextField brandTxt;
-
-    @FXML
-    private TextField carID;
-
-    @FXML
-    private Label carLbl;
-    // table for car being rented by current user
-    @FXML
-    private TableView<Order> carOnRentTable;
-
-    @FXML
-    private TextField cost;
-
-    @FXML
-    private Label durationLbl;
-
-    @FXML
-    private TextField durationTxt;
-
-    @FXML
-    private Button editBtn;
-
-    @FXML
-    private Button pCancelBtn;
-
-    @FXML
-    private Label fineLbl;
-
-    @FXML
-    private TextField modelNum;
-
-    @FXML
-    private Label numPlateLbl;
-
-    @FXML
-    private Label oidLbl;
-
-    @FXML
-    private Label paymentLbl;
-
-    @FXML
-    private TextField plateNum;
-
-    @FXML
-    private TableColumn<Car, String> rentBrandCol;
-
-    @FXML
-    private TableColumn<Car, Integer> rentCarId;
-
-    @FXML
-    private TableColumn<Car, Boolean> rentCarStatus; // car availability
-
-    @FXML
-    private TableColumn<Car, Double> rentCostCol; // cost
-
-    @FXML
-    private TableColumn<Car, String> rentModelCol;
-
-    @FXML
-    private TableColumn<Car, String> rentPlateNumCol;
-
-    @FXML
-    private TableColumn<Car, Integer> rentYearCol;
-
-    @FXML
-    private TableView<Order> rentalHistoryTable;
-
-    @FXML
-    private DatePicker returnDate;
-
-    @FXML
-    private Label returnDateLbl;
-
-    @FXML
-    private DatePicker startDate;
-
-    @FXML
-    private Label startDateLbl;
 
     @FXML
     private TextField txtContact;
@@ -138,7 +54,16 @@ public class UserController
     private TextField txtUID;
 
     @FXML
-    private TextField year;
+    private Button editBtn;
+
+    @FXML
+    private Button pCancelBtn;
+
+    @FXML
+    private Button pSaveBtn;
+
+    @FXML
+    private TableView<Order> rentalHistoryTable;
 
     @FXML
     private TableColumn<Order, Integer> pOrderID;
@@ -167,8 +92,85 @@ public class UserController
     @FXML
     private TableColumn<Order, String> pStatus;
 
+    // rent page table
     @FXML
-    private Button pSaveBtn;
+    private TextField carID;
+
+    @FXML
+    private TextField brandTxt;
+
+    @FXML
+    private TextField modelNum;
+
+    @FXML
+    private TextField year;
+
+    @FXML
+    private TextField plateNum;
+
+    @FXML
+    private TextField cost;
+
+    @FXML
+    private DatePicker startDate;
+
+    @FXML
+    private DatePicker returnDate;
+
+    @FXML
+    private TextField durationTxt;
+
+    @FXML
+    private TableView<Car> availableCarTable;
+
+    @FXML
+    private TableColumn<Car, String> rentBrandCol;
+
+    @FXML
+    private TableColumn<Car, Integer> rentCarId;
+
+    @FXML
+    private TableColumn<Car, Boolean> rentCarStatus; // car availability
+
+    @FXML
+    private TableColumn<Car, Double> rentCostCol; // cost
+
+    @FXML
+    private TableColumn<Car, String> rentModelCol;
+
+    @FXML
+    private TableColumn<Car, String> rentPlateNumCol;
+
+    @FXML
+    private TableColumn<Car, Integer> rentYearCol;
+
+    // return page
+    @FXML
+    private TableView<Order> carOnRentTable;
+
+    @FXML
+    private Label orderLbl;
+
+    @FXML
+    private Label durationLbl;
+
+    @FXML
+    private Label fineLbl;
+
+    @FXML
+    private Label numPlateLbl;
+
+    @FXML
+    private Label vehicleLbl;
+
+    @FXML
+    private Label totalPaymentLbl;
+
+    @FXML
+    private Label startDateLbl;
+
+    @FXML
+    private Label returnDateLbl;
 
     @FXML
     private TableColumn<Order, Integer> rOrderID;
@@ -197,9 +199,11 @@ public class UserController
     SimpleDateFormat dcn = new SimpleDateFormat("dd-MM-yyyy");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+    // to populate tables with information related to user
     public void populateAllTable() {
         showProfile(LoginController.loggedInUsername);
         populateCarListing();
+        populateReturnTable(LoginController.loggedInUsername);
     }
 
     /*
@@ -426,17 +430,43 @@ public class UserController
         cost.setText(null);
     }
 
+    public void carSelected() {
+        availableCarTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
+                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
+                modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
+                brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
+                year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
+                cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
+            }
+        });
+    }
+
     /*
      * return car page
      */
 
-    public void populateReturnTable(ArrayList orderAl) {
-        ObservableList<Order> OrderOl = FXCollections.observableArrayList(orderAl);
+    // populates table content when user logins
+    public void populateReturnTable(String loggedInUsername) {
+        ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+        ArrayList<Order> pendingOrder = new ArrayList<Order>();
+        while (orderLi.hasNext()) {
+            Order order = (Order) orderLi.next();
+            if (order.getClientName().equals(loggedInUsername) && !order.isPaid()) {
+                pendingOrder.add(order);
+            }
+
+        }
+
+        ObservableList<Order> orderOl = FXCollections.observableArrayList(pendingOrder);
 
         rOrderID.setCellValueFactory(
                 new PropertyValueFactory<Order, Integer>("_id"));
         // * Plate Num
-        // pNumPlate.setCellValueFactory(
+        // rPlateNum.setCellValueFactory(
         // new PropertyValueFactory<Order, String>("plateNum"));
         // * Order VehicleDetail
         rVehicleDetail.setCellValueFactory(
@@ -457,24 +487,33 @@ public class UserController
         pStatus.setCellValueFactory(
                 new PropertyValueFactory<Order, String>("orderStatus"));
         // * Set table data
-        rentalHistoryTable.setItems(OrderOl);
+        carOnRentTable.setItems(orderOl);
+
+    }
+
+    public void orderSelected() {
+        carOnRentTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                orderLbl.setText(Integer.toString(carOnRentTable.getSelectionModel().getSelectedItem().get_id()));
+                // numPlateLbl.setText(carOnRentTable.getSelectionModel().getSelectedItem().getPlateNum());
+                vehicleLbl.setText(carOnRentTable.getSelectionModel().getSelectedItem().getVehicle());
+                startDateLbl.setText((carOnRentTable.getSelectionModel().getSelectedItem().getRentOn()).toString());
+                returnDateLbl.setText((carOnRentTable.getSelectionModel().getSelectedItem().getReturnOn()).toString());
+                durationLbl.setText(Long.toString(carOnRentTable.getSelectionModel().getSelectedItem().getDuration()));
+                totalPaymentLbl
+                        .setText(Double.toString(carOnRentTable.getSelectionModel().getSelectedItem().getTotalCost()));
+            }
+        });
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        availableCarTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
-                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
-                modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
-                brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
-                year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
-                cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
-            }
-        });
+        carSelected();
+        orderSelected();
+
     }
 
     @Override
