@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -367,6 +368,7 @@ public class UserController
     // rent confirm to send request
     @FXML
     public void rentRequest(ActionEvent event) {
+        int recentID;
         String car_id = carID.getText();
         String plate_num = plateNum.getText();
         String model_num = modelNum.getText();
@@ -389,7 +391,32 @@ public class UserController
         ArrayList<Order> orderAl = new FileService().readOrderData();
         ListIterator<Order> orderLi = orderAl.listIterator();
 
-        Order order = new Order(0, costPerDay, date1, date2, 0, sDate, rDate, false);
+        if (orderAl.size() != 0) {
+            recentID = orderAl
+                    .stream()
+                    .max(Comparator.comparing(Order::get_id))
+                    .get()
+                    .get_id() +
+                    1;
+        } else {
+            recentID = 1000;
+        }
+
+        Order newOrder = new Order(
+                recentID,
+                costPerDay,
+                date1,
+                date2,
+                0,
+                sDate,
+                rDate,
+                false);
+
+        orderAl.add(newOrder);
+        new FileService().writeOrderData(orderAl);
+
+        // Reset UI input
+        clear();
 
     }
 
@@ -417,17 +444,7 @@ public class UserController
     }
 
     public void clearRentText(ActionEvent event) {
-        // startDate.setPromptText("Choose rental date");
-        startDate.setValue(null);
-        // returnDate.setPromptText("Choose return date");
-        returnDate.setValue(null);
-        durationTxt.setText(null);
-        carID.setText(null);
-        plateNum.setText(null);
-        modelNum.setText(null);
-        brandTxt.setText(null);
-        year.setText(null);
-        cost.setText(null);
+        clear();
     }
 
     public void carSelected() {
@@ -442,6 +459,20 @@ public class UserController
                 cost.setText(Double.toString(availableCarTable.getSelectionModel().getSelectedItem().getCost()));
             }
         });
+    }
+
+    public void clear() {
+        // startDate.setPromptText("Choose rental date");
+        startDate.setValue(null);
+        // returnDate.setPromptText("Choose return date");
+        returnDate.setValue(null);
+        durationTxt.setText(null);
+        carID.setText(null);
+        plateNum.setText(null);
+        modelNum.setText(null);
+        brandTxt.setText(null);
+        year.setText(null);
+        cost.setText(null);
     }
 
     /*
