@@ -70,7 +70,9 @@ public class CommonMethods {
 
     if (((Button) (event.getSource())).getId().equals("logoutButton") ||
         ((Button) (event.getSource())).getId().equals("regBtn") ||
-        ((Button) (event.getSource())).getId().equals("retBtn"))
+        ((Button) (event.getSource())).getId().equals("retBtn") ||
+        ((Button) (event.getSource())).getId().equals("exitBtn"))
+
       newscene = "Login.fxml";
 
     try {
@@ -101,6 +103,9 @@ public class CommonMethods {
     String newscene = "";
     if (((Hyperlink) (event.getSource())).getId().equals("loginLink"))
       newscene = "Login.fxml";
+
+    if (((Hyperlink) (event.getSource())).getId().equals("guestLink"))
+      newscene = "Guest.fxml";
 
     if (((Hyperlink) (event.getSource())).getId().equals("registerLink"))
       newscene = "Register.fxml";

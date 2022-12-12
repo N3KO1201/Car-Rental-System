@@ -389,7 +389,6 @@ public class UserController
 
         // To add : update order list
         ArrayList<Order> orderAl = new FileService().readOrderData();
-        ListIterator<Order> orderLi = orderAl.listIterator();
 
         if (orderAl.size() != 0) {
             recentID = orderAl

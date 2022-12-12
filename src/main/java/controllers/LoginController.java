@@ -273,5 +273,15 @@ public class LoginController extends CommonMethods implements UserDao {
    */
   public void loginPage(ActionEvent e) {
     super.loadLinkScene(e);
+
+  }
+
+  /**
+   * * Prompt user to guest page onLinkAction
+   * 
+   * @param ActionEvent retrieve hyperlink ID
+   */
+  public void guestPage(ActionEvent e) {
+    super.loadLinkScene(e);
   }
 }
