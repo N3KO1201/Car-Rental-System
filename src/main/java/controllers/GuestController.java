@@ -43,9 +43,13 @@ public class GuestController extends CommonMethods implements UserDao {
     @FXML
     private TableColumn<Car, Integer> rentYearCol;
 
-    @FXML
-    void registerPage(ActionEvent event) {
-        super.loadLinkScene(event);
+    /**
+     * * Prompt user to register page onLinkAction
+     * 
+     * @param ActionEvent retrieve hyperlink ID
+     */
+    public void registerPage(ActionEvent e) {
+        super.loadLinkScene(e);
     }
 
     @Override
