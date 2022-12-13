@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ListIterator;
+
+import javax.xml.transform.Source;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -119,7 +122,7 @@ public class LoginController extends CommonMethods implements UserDao {
             } else {
               UserController userController = loader.getController();
               // userController.showProfile(username);
-              userController.populateAllTable();
+              // userController.populateAllTable();
             }
 
             //

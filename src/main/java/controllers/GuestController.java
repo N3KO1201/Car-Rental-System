@@ -1,11 +1,14 @@
 package main.java.controllers;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,7 +20,7 @@ import main.java.dao.UserDao;
 import main.java.entities.Car;
 import main.java.util.FileService;
 
-public class GuestController extends CommonMethods implements UserDao {
+public class GuestController extends CommonMethods implements UserDao, Initializable {
 
     @FXML
     private TableView<Car> availableCarTable;
@@ -116,6 +119,11 @@ public class GuestController extends CommonMethods implements UserDao {
     public void register(ActionEvent e) throws IOException {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        populateCarListing();
     }
 
 }

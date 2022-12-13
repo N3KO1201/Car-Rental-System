@@ -73,7 +73,7 @@
                         <Label layoutX="65.0" layoutY="85.0" text="Rent Date" />
                         <Label layoutX="65.0" layoutY="130.0" text="Return Date" />
                         <DatePicker fx:id="startDate" layoutX="160.0" layoutY="81.0" promptText="Choose rent date" />
-                        <DatePicker fx:id="returnDate" layoutX="159.0" layoutY="126.0" onHiding="#duration" onMouseReleased="#clearRentText" promptText="Choose return date" />
+                        <DatePicker fx:id="returnDate" layoutX="159.0" layoutY="126.0" onAction="#calcDuration" promptText="Choose return date" />
                         <TextField fx:id="carID" editable="false" layoutX="159.0" layoutY="216.0" prefWidth="175.2" />
                         <TextField fx:id="plateNum" editable="false" layoutX="159.0" layoutY="261.0" prefWidth="175.2" />
                         <TextField fx:id="modelNum" editable="false" layoutX="160.0" layoutY="306.0" prefWidth="175.2" />
@@ -137,6 +137,6 @@
          </tabs>
       </TabPane>
       <Button fx:id="adminButton" layoutX="40.0" layoutY="54.0" mnemonicParsing="false" opacity="0.0" text="Admin" />
-      <Button fx:id="exitBtn" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" text="Exit" />
+      <Button fx:id="exitBtn" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
    </children>
 </AnchorPane>

@@ -2,9 +2,11 @@ package main.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -32,6 +34,7 @@ import javafx.scene.input.MouseEvent;
 import main.java.dao.UserDao;
 import main.java.entities.Car;
 import main.java.entities.Order;
+import main.java.entities.Status;
 import main.java.entities.User;
 import main.java.util.FileService;
 
@@ -91,7 +94,7 @@ public class UserController
     private TableColumn<Order, Double> pTotal;
 
     @FXML
-    private TableColumn<Order, String> pStatus;
+    private TableColumn<Order, Status> pStatus;
 
     // rent page table
     @FXML
@@ -195,7 +198,7 @@ public class UserController
     private TableColumn<Order, Double> rTotal;
 
     @FXML
-    private TableColumn<Order, String> rStatus;
+    private TableColumn<Order, Status> rStatus;
 
     SimpleDateFormat dcn = new SimpleDateFormat("dd-MM-yyyy");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -205,6 +208,12 @@ public class UserController
         showProfile(LoginController.loggedInUsername);
         populateCarListing();
         populateReturnTable(LoginController.loggedInUsername);
+    }
+
+    // return to login page for return button
+    @FXML
+    public void exit(ActionEvent e) throws IOException {
+        super.loadButtonScene(e);
     }
 
     /*
@@ -269,7 +278,7 @@ public class UserController
                 new PropertyValueFactory<Order, Double>("totalCost"));
 
         pStatus.setCellValueFactory(
-                new PropertyValueFactory<Order, String>("orderStatus"));
+                new PropertyValueFactory<Order, Status>("orderStatus"));
         // * Set table data
         rentalHistoryTable.setItems(OrderOl);
     }
@@ -365,27 +374,21 @@ public class UserController
 
     }
 
+    public void calcDuration(ActionEvent e) throws ParseException {
+        durationTxt.setText(String.valueOf(ChronoUnit.DAYS.between(startDate.getValue(), returnDate.getValue())));
+    }
+
     // rent confirm to send request
     @FXML
     public void rentRequest(ActionEvent event) {
+
         int recentID;
-        String car_id = carID.getText();
-        String plate_num = plateNum.getText();
         String model_num = modelNum.getText();
         String brand = brandTxt.getText();
         String manuYear = year.getText();
         String costPerDay = cost.getText();
         LocalDate sDate = startDate.getValue();
         LocalDate rDate = returnDate.getValue();
-
-        // Change date format
-        String date1 = dcn.format(startDate.getValue());
-        String date2 = dcn.format(returnDate.getValue());
-        sDate = LocalDate.parse(date1, formatter);
-        rDate = LocalDate.parse(date2, formatter);
-
-        // calculate duration
-        calcDuration(startDate.getValue(), returnDate.getValue());
 
         // To add : update order list
         ArrayList<Order> orderAl = new FileService().readOrderData();
@@ -401,45 +404,25 @@ public class UserController
             recentID = 1000;
         }
 
-        Order newOrder = new Order(
-                recentID,
-                costPerDay,
-                date1,
-                date2,
-                0,
-                sDate,
-                rDate,
-                false);
+        if (!brand.equals("")) {
+            Order newOrder = new Order(
+                    recentID,
+                    LoginController.loggedInUsername,
+                    String.valueOf(txtContact.getText()),
+                    brand + " " + model_num + ", " + manuYear,
+                    Double.parseDouble(costPerDay),
+                    sDate,
+                    rDate,
+                    false);
 
-        orderAl.add(newOrder);
-        new FileService().writeOrderData(orderAl);
+            System.out.println(newOrder);
+            orderAl.add(newOrder);
+            new FileService().writeOrderData(orderAl);
+        }
 
         // Reset UI input
         clear();
 
-    }
-
-    // please help here need to make duration appear in teext field
-    public void duration(ActionEvent event) {
-        System.out.println(startDate.getValue());
-        System.out.println(returnDate.getValue());
-        calcDuration(startDate.getValue(), returnDate.getValue());
-    }
-
-    // Calculates rent duration
-
-    public void calcDuration(LocalDate startDate, LocalDate returnDate) {
-        String date1 = dcn.format(startDate);
-        String date2 = dcn.format(returnDate);
-        try {
-            Date sDate = dcn.parse(date1);
-            Date rDate = dcn.parse(date2);
-            long difference = rDate.getTime() - sDate.getTime();
-            long smoothDuration = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
-            durationTxt.setText(String.valueOf(smoothDuration));
-        } catch (Exception E) {
-            System.out.println(E);
-        }
     }
 
     public void clearRentText(ActionEvent event) {
@@ -461,17 +444,15 @@ public class UserController
     }
 
     public void clear() {
-        // startDate.setPromptText("Choose rental date");
-        startDate.setValue(null);
-        // returnDate.setPromptText("Choose return date");
-        returnDate.setValue(null);
-        durationTxt.setText(null);
-        carID.setText(null);
-        plateNum.setText(null);
-        modelNum.setText(null);
-        brandTxt.setText(null);
-        year.setText(null);
-        cost.setText(null);
+        durationTxt.setText("");
+        startDate.setValue(LocalDate.now());
+        returnDate.setValue(LocalDate.now());
+        carID.setText("");
+        plateNum.setText("");
+        modelNum.setText("");
+        brandTxt.setText("");
+        year.setText("");
+        cost.setText("");
     }
 
     /*
@@ -514,8 +495,8 @@ public class UserController
         rTotal.setCellValueFactory(
                 new PropertyValueFactory<Order, Double>("totalCost"));
 
-        pStatus.setCellValueFactory(
-                new PropertyValueFactory<Order, String>("orderStatus"));
+        rStatus.setCellValueFactory(
+                new PropertyValueFactory<Order, Status>("orderStatus"));
         // * Set table data
         carOnRentTable.setItems(orderOl);
 
@@ -543,6 +524,7 @@ public class UserController
         // TODO Auto-generated method stub
         carSelected();
         orderSelected();
+        populateAllTable();
 
     }
 
