@@ -100,7 +100,7 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab closable="false" text="Return Car">
+            <Tab closable="false" text="Payment">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="1280.0">
                      <children>
@@ -131,6 +131,11 @@
                         <Label fx:id="returnDateLbl" layoutX="170.0" layoutY="245.0" text="Select from table" />
                         <Label fx:id="durationLbl" layoutX="170.0" layoutY="285.0" text="Select from table" />
                         <Label fx:id="totalPaymentLbl" layoutX="170.0" layoutY="400.0" text="Select from table" />
+                        <Label layoutX="703.0" layoutY="23.0" text="Pending Payment">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
                </content>
             </Tab>
