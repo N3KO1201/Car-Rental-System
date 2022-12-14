@@ -9,14 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-
-import javax.management.modelmbean.ModelMBean;
-import javax.swing.JOptionPane;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,7 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import main.java.dao.UserDao;
@@ -111,7 +104,7 @@ public class UserController
     private TextField year;
 
     @FXML
-    private TextField plateNum;
+    private TextField txtPlateNum;
 
     @FXML
     private TextField cost;
@@ -184,7 +177,7 @@ public class UserController
     private TableColumn<Order, String> rVehicleDetail;
 
     @FXML
-    private TableColumn<Order, String> rNumPlate;
+    private TableColumn<Order, String> rPlateNum;
 
     @FXML
     private TableColumn<Order, Double> rCost;
@@ -239,7 +232,7 @@ public class UserController
 
                 while (orderLi.hasNext()) {
                     Order order = (Order) orderLi.next();
-                    if (order.getClientName().equals(username)) {
+                    if (order.getClientID() == user.get_id()) {
                         newOrderAl.add(order);
                     }
                 }
@@ -257,8 +250,8 @@ public class UserController
         pOrderID.setCellValueFactory(
                 new PropertyValueFactory<Order, Integer>("_id"));
         // * Plate Num
-        // pNumPlate.setCellValueFactory(
-        // new PropertyValueFactory<Order, String>("plateNum"));
+        pNumPlate.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("plateNum"));
         // * Order VehicleDetail
         pVehicleDetail.setCellValueFactory(
                 new PropertyValueFactory<Order, String>("vehicle"));
@@ -296,6 +289,7 @@ public class UserController
     // Cancel profile edit and return to view only
     @FXML
     public void pCancel(ActionEvent e) {
+        showProfile(LoginController.loggedInUsername);
         txtName.setEditable(false);
         txtEmail.setEditable(false);
         txtContact.setEditable(false);
@@ -383,6 +377,8 @@ public class UserController
     public void rentRequest(ActionEvent event) {
 
         int recentID;
+        int userID = Integer.parseInt(txtUID.getText());
+        String plateNum = txtPlateNum.getText();
         String model_num = modelNum.getText();
         String brand = brandTxt.getText();
         String manuYear = year.getText();
@@ -407,8 +403,10 @@ public class UserController
         if (!brand.equals("")) {
             Order newOrder = new Order(
                     recentID,
+                    userID,
                     LoginController.loggedInUsername,
                     String.valueOf(txtContact.getText()),
+                    plateNum,
                     brand + " " + model_num + ", " + manuYear,
                     Double.parseDouble(costPerDay),
                     sDate,
@@ -446,7 +444,7 @@ public class UserController
             @Override
             public void handle(MouseEvent event) {
                 carID.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().get_id()));
-                plateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
+                txtPlateNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getPlateNum());
                 modelNum.setText(availableCarTable.getSelectionModel().getSelectedItem().getModel());
                 brandTxt.setText(availableCarTable.getSelectionModel().getSelectedItem().getBrand());
                 year.setText(Integer.toString(availableCarTable.getSelectionModel().getSelectedItem().getYear()));
@@ -460,7 +458,7 @@ public class UserController
         startDate.setValue(LocalDate.now());
         returnDate.setValue(LocalDate.now());
         carID.setText("");
-        plateNum.setText("");
+        txtPlateNum.setText("");
         modelNum.setText("");
         brandTxt.setText("");
         year.setText("");
@@ -476,9 +474,10 @@ public class UserController
         ArrayList<Order> orderAl = new FileService().readOrderData();
         ListIterator<Order> orderLi = orderAl.listIterator();
         ArrayList<Order> pendingOrder = new ArrayList<Order>();
+
         while (orderLi.hasNext()) {
             Order order = (Order) orderLi.next();
-            if (order.getClientName().equals(loggedInUsername) && !order.isPaid()) {
+            if (order.getClientID() == Integer.parseInt(txtUID.getText()) && !order.isPaid()) {
                 pendingOrder.add(order);
             }
 
@@ -489,8 +488,8 @@ public class UserController
         rOrderID.setCellValueFactory(
                 new PropertyValueFactory<Order, Integer>("_id"));
         // * Plate Num
-        // rPlateNum.setCellValueFactory(
-        // new PropertyValueFactory<Order, String>("plateNum"));
+        rPlateNum.setCellValueFactory(
+                new PropertyValueFactory<Order, String>("plateNum"));
         // * Order VehicleDetail
         rVehicleDetail.setCellValueFactory(
                 new PropertyValueFactory<Order, String>("vehicle"));
@@ -519,7 +518,7 @@ public class UserController
             @Override
             public void handle(MouseEvent event) {
                 orderLbl.setText(Integer.toString(carOnRentTable.getSelectionModel().getSelectedItem().get_id()));
-                // numPlateLbl.setText(carOnRentTable.getSelectionModel().getSelectedItem().getPlateNum());
+                numPlateLbl.setText(carOnRentTable.getSelectionModel().getSelectedItem().getPlateNum());
                 vehicleLbl.setText(carOnRentTable.getSelectionModel().getSelectedItem().getVehicle());
                 startDateLbl.setText((carOnRentTable.getSelectionModel().getSelectedItem().getRentOn()).toString());
                 returnDateLbl.setText((carOnRentTable.getSelectionModel().getSelectedItem().getReturnOn()).toString());

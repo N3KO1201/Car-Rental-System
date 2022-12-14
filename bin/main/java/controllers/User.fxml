@@ -75,7 +75,7 @@
                         <DatePicker fx:id="startDate" layoutX="160.0" layoutY="81.0" promptText="Choose rent date" />
                         <DatePicker fx:id="returnDate" layoutX="159.0" layoutY="126.0" onAction="#calcDuration" promptText="Choose return date" />
                         <TextField fx:id="carID" editable="false" layoutX="159.0" layoutY="216.0" prefWidth="175.2" />
-                        <TextField fx:id="plateNum" editable="false" layoutX="159.0" layoutY="261.0" prefWidth="175.2" />
+                        <TextField fx:id="txtPlateNum" editable="false" layoutX="159.0" layoutY="261.0" prefWidth="175.2" />
                         <TextField fx:id="modelNum" editable="false" layoutX="160.0" layoutY="306.0" prefWidth="175.2" />
                         <TextField fx:id="brandTxt" editable="false" layoutX="160.0" layoutY="351.0" prefWidth="175.2" />
                         <TextField fx:id="year" editable="false" layoutX="159.0" layoutY="396.0" prefWidth="175.2" />
