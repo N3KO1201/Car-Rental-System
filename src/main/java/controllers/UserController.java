@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import main.java.dao.UserDao;
@@ -307,7 +308,6 @@ public class UserController
         /*
          * TO DO
          * readfile fetch user data
-         * 
          */
         String newName = txtName.getText();
         String newEmail = txtEmail.getText();
@@ -375,7 +375,7 @@ public class UserController
     }
 
     public void calcDuration(ActionEvent e) throws ParseException {
-        durationTxt.setText(String.valueOf(ChronoUnit.DAYS.between(startDate.getValue(), returnDate.getValue())));
+        durationTxt.setText(String.valueOf(ChronoUnit.DAYS.between(startDate.getValue(), returnDate.getValue())) + 1);
     }
 
     // rent confirm to send request
@@ -420,9 +420,12 @@ public class UserController
             new FileService().writeOrderData(orderAl);
         }
 
+        // update car to not available
+
+        // updates tableview
+        populateAllTable();
         // Reset UI input
         clear();
-
     }
 
     public void clearRentText(ActionEvent event) {
@@ -525,7 +528,6 @@ public class UserController
         carSelected();
         orderSelected();
         populateAllTable();
-
     }
 
     @Override
