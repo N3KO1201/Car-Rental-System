@@ -375,7 +375,7 @@ public class UserController
     }
 
     public void calcDuration(ActionEvent e) throws ParseException {
-        durationTxt.setText(String.valueOf(ChronoUnit.DAYS.between(startDate.getValue(), returnDate.getValue())) + 1);
+        durationTxt.setText(String.valueOf(ChronoUnit.DAYS.between(startDate.getValue(), returnDate.getValue()) + 1));
     }
 
     // rent confirm to send request
@@ -421,6 +421,15 @@ public class UserController
         }
 
         // update car to not available
+        ArrayList<Car> carAl = super.sortByLatestCar(new FileService().readCarData());
+        ListIterator<Car> carLi = carAl.listIterator();
+        while (carLi.hasNext()) {
+            Car car = (Car) carLi.next();
+            if ((car.get_id()) == (availableCarTable.getSelectionModel().getSelectedItem().get_id())) {
+                car.setAvailable(false);
+            }
+        }
+        new FileService().writeCarData(carAl);
 
         // updates tableview
         populateAllTable();
