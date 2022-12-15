@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.GuestController">
+   <children>
+      <Pane layoutX="1.0" layoutY="130.0" prefHeight="590.0" prefWidth="1278.0">
+         <children>
+            <TableView fx:id="availableCarTable" layoutX="338.0" layoutY="153.0" prefHeight="357.0" prefWidth="644.0">
+               <columns>
+                  <TableColumn fx:id="rentCarId" prefWidth="110.4000244140625" text="Car_ID" />
+                  <TableColumn fx:id="rentPlateNumCol" prefWidth="88.0" text="Plate No." />
+                  <TableColumn fx:id="rentModelCol" prefWidth="76.00003051757812" text="Model" />
+                  <TableColumn fx:id="rentBrandCol" prefWidth="82.13336181640625" text="Brand" />
+                  <TableColumn fx:id="rentYearCol" prefWidth="79.73333740234375" text="Year" />
+                  <TableColumn fx:id="rentCostCol" prefWidth="85.066650390625" text="Cost (RM)" />
+                  <TableColumn fx:id="rentCarStatus" prefWidth="123.20001220703125" text="Availability" />
+               </columns>
+            </TableView>
+            <Label layoutX="469.0" layoutY="50.0" text="Cars Available for rent" textAlignment="CENTER">
+               <font>
+                  <Font name="Century" size="34.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="registerLink" layoutX="1193.0" layoutY="26.0" onAction="#registerPage" text="New User?" />
+            <Button fx:id="exitBtn" layoutX="27.0" layoutY="25.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="55.0" text="Exit" />
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutY="-2.0" prefHeight="132.0" prefWidth="1280.0" style="-fx-background-color: #073422;" text="Super Car Rental System" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="32.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

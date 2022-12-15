@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -348,7 +349,7 @@ public class AdminController
 
       // Validate listing details input
       ArrayList<String> validateAl = new ValidationService()
-      .validateListingDetails(
+        .validateListingDetails(
           newNumPlate,
           newModel,
           newBrand,
@@ -591,7 +592,7 @@ public class AdminController
         }
       }
       if (!found) System.out.println("What can you do?"); else new FileService()
-      .writeCarData(carAl);
+        .writeCarData(carAl);
 
       listingTable.setEditable(false);
 
@@ -851,7 +852,11 @@ public class AdminController
   }
 
   @Override
-  public void generateReport() {}
+  public void generateReport(ActionEvent e) {
+    FXMLLoader loader = super.loadButtonScene(e);
+    ReportController receiptController = loader.getController();
+    receiptController.generateReport();
+  }
 
   @Override
   public void viewAllLog() {

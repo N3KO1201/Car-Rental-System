@@ -28,6 +28,7 @@ import main.java.util.ValidationService;
 public class LoginController extends CommonMethods implements UserDao {
 
   public static String loggedInUsername;
+  public static boolean isAdmin;
 
   @FXML
   TextField usernameInput, passwordInput, confirmPasswordInput, emailInput, contactInput;
@@ -42,6 +43,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Verify login user onButtonAction
+   *
    * @param ActionEvent retrieve user inputs and button clicked
    * @throws IOException
    */
@@ -104,12 +106,20 @@ public class LoginController extends CommonMethods implements UserDao {
             ArrayList<Log> sortByIDAl = super.sortByLatestLog(logAl);
             new FileService().writeLogData(sortByIDAl);
 
+            loggedInUsername = username;
+            isAdmin = user.isAdmin();
+
             // prompt user to home page
             FXMLLoader loader = super.loadButtonScene(e);
-            AdminController adminController = loader.getController();
-            adminController.displayName(username);
-            adminController.viewAllLog();
-            loggedInUsername = username;
+            if (user.isAdmin()) {
+              AdminController adminController = loader.getController();
+              adminController.displayName(username);
+              adminController.viewAllLog();
+            } else {
+              UserController userController = loader.getController();
+              // userController.showProfile(username);
+              // userController.populateAllTable();
+            }
 
             //
             System.out.println(
@@ -132,6 +142,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Register new staff onButtonAction
+   *
    * @param ActionEvent retrieve user inputs and button clicked
    * @throws IOException
    */
@@ -167,7 +178,7 @@ public class LoginController extends CommonMethods implements UserDao {
       // add validation errors
       validateRegister =
         new ValidationService()
-        .registerValidation(username, password, confirmPassword);
+          .registerValidation(username, password, confirmPassword);
 
       // If error exist
       if (validateRegister.size() != 0) {
@@ -247,6 +258,7 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Prompt user to register page onLinkAction
+   *
    * @param ActionEvent retrieve hyperlink ID
    */
   public void registerPage(ActionEvent e) {
@@ -255,9 +267,19 @@ public class LoginController extends CommonMethods implements UserDao {
 
   /**
    * * Prompt user to register page onLinkAction
+   *
    * @param ActionEvent retrieve hyperlink ID
    */
   public void loginPage(ActionEvent e) {
+    super.loadLinkScene(e);
+  }
+
+  /**
+   * * Prompt user to guest page onLinkAction
+   *
+   * @param ActionEvent retrieve hyperlink ID
+   */
+  public void guestPage(ActionEvent e) {
     super.loadLinkScene(e);
   }
 }

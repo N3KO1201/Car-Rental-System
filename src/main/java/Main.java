@@ -26,8 +26,7 @@ public class Main extends Application {
   public void start(Stage stage) throws Exception {
     try {
       FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("controllers/Login.fxml")
-      );
+          getClass().getResource("controllers/Login.fxml"));
       Parent root = loader.load();
       loader.getController();
       Scene scene = new Scene(root);
@@ -38,35 +37,32 @@ public class Main extends Application {
       stage.setScene(scene);
       stage.show();
       stage.setOnCloseRequest(
-        evt -> {
-          LocalDateTime newTimeStamp = LocalDateTime.now(
-            ZoneId.of("GMT+08:00")
-          );
-          String formattedTimeStamp = newTimeStamp.format(
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-          );
+          evt -> {
+            LocalDateTime newTimeStamp = LocalDateTime.now(
+                ZoneId.of("GMT+08:00"));
+            String formattedTimeStamp = newTimeStamp.format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-          ArrayList<Log> logAl = new FileService().readLogData();
-          ListIterator<Log> logLi = logAl.listIterator();
+            ArrayList<Log> logAl = new FileService().readLogData();
+            ListIterator<Log> logLi = logAl.listIterator();
 
-          while (logLi.hasNext()) {
-            Log log = (Log) logLi.next();
+            while (logLi.hasNext()) {
+              Log log = (Log) logLi.next();
 
-            log.setLogoffTimestamp(formattedTimeStamp);
-            log.setOnlineDuration();
-            break;
-          }
+              log.setLogoffTimestamp(formattedTimeStamp);
+              log.setOnlineDuration();
+              break;
+            }
 
-          new FileService().writeLogData(logAl);
-        }
-      );
+            new FileService().writeLogData(logAl);
+          });
     } catch (Exception err) {
       err.printStackTrace();
     }
   }
 
   public static void main(String[] args)
-    throws IOException, InterruptedException, ClassNotFoundException {
+      throws IOException, InterruptedException, ClassNotFoundException {
     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
     new Seeder().seedUser();

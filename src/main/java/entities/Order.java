@@ -7,8 +7,10 @@ import java.time.temporal.ChronoUnit;
 public class Order implements Serializable {
 
   private int _id;
+  private int _clientID;
   private String _clientName;
   private String _contact;
+  private String _plateNum;
   private String _vehicle;
   private double _cost;
   private double _totalCost;
@@ -21,20 +23,23 @@ public class Order implements Serializable {
   private final double serviceTax = 1.1;
 
   public Order(
-    int _id,
-    String clientName,
-    String contact,
-    String vehicle,
-    double cost,
-    LocalDate rentOn,
-    LocalDate returnOn,
-    boolean paid
-  ) {
+      int _id,
+      int clientID,
+      String clientName,
+      String contact,
+      String plateNum,
+      String vehicle,
+      double cost,
+      LocalDate rentOn,
+      LocalDate returnOn,
+      boolean paid) {
     this.set_id(_id); // 1000
+    this.setClientID(clientID);// 1
     this.setClientName(clientName); // eugene
     this.setContact(contact); // 0183216766
+    this.setPlateNum(plateNum);
     this.setVehicle(vehicle); // Toyota Prius, 2018
-    this.setCost(cost); //  299.9
+    this.setCost(cost); // 299.9
 
     this.setRentOn(rentOn); // LocalDate 2022/09/08
     this.setReturnOn(returnOn);
@@ -47,23 +52,26 @@ public class Order implements Serializable {
   @Override
   public String toString() {
     return String.format(
-      "%d %s %s %s %.2f %s %d %s %.2f %s",
-      _id,
-      _clientName,
-      _contact,
-      _vehicle,
-      _cost,
-      _rentOn,
-      _duration,
-      _isPaid,
-      _totalCost,
-      _orderStatus
-    );
+        "%d %s %s %s %.2f %s %d %s %.2f %s",
+        _id,
+        _clientName,
+        _contact,
+        _vehicle,
+        _cost,
+        _rentOn,
+        _duration,
+        _isPaid,
+        _totalCost,
+        _orderStatus);
   }
 
   // Getter
   public int get_id() {
     return _id;
+  }
+
+  public int getClientID() {
+    return _clientID;
   }
 
   public String getClientName() {
@@ -72,6 +80,10 @@ public class Order implements Serializable {
 
   public String getContact() {
     return _contact;
+  }
+
+  public String getPlateNum() {
+    return _plateNum;
   }
 
   public String getVehicle() {
@@ -111,12 +123,20 @@ public class Order implements Serializable {
     this._id = _id;
   }
 
+  public void setClientID(int _clientID) {
+    this._clientID = _clientID;
+  }
+
   public void setClientName(String _clientName) {
     this._clientName = _clientName;
   }
 
   public void setContact(String _contact) {
     this._contact = _contact;
+  }
+
+  public void setPlateNum(String _plateNum) {
+    this._plateNum = _plateNum;
   }
 
   public void setVehicle(String _vehicle) {
@@ -156,4 +176,5 @@ public class Order implements Serializable {
   public void setOrderStatus(Status _orderStatus) {
     this._orderStatus = _orderStatus;
   }
+
 }

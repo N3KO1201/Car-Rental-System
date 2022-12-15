@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.UserController">
+   <children>
+      <Label alignment="CENTER" layoutX="-4.0" prefHeight="132.0" prefWidth="1280.0" style="-fx-background-color: Grey;" text="CRS">
+         <font>
+            <Font name="Century Schoolbook Bold Italic" size="27.0" />
+         </font>
+      </Label>
+      <TabPane layoutY="131.0" prefHeight="672.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab closable="false" text="Profile">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="1280.0">
+                     <children>
+                        <TableView fx:id="rentalHistoryTable" layoutX="392.0" layoutY="107.0" prefHeight="354.0" prefWidth="865.0">
+                           <columns>
+                              <TableColumn fx:id="pOrderID" prefWidth="69.60000610351562" text="Order ID" />
+                              <TableColumn fx:id="pNumPlate" prefWidth="100.80001831054688" text="Number Plate" />
+                              <TableColumn fx:id="pVehicleDetail" prefWidth="137.5999755859375" text="Vehicle Details" />
+                              <TableColumn fx:id="pCost" prefWidth="78.4000244140625" text="Cost/Day" />
+                              <TableColumn fx:id="pRentDate" prefWidth="88.79998779296875" text="Rent Date" />
+                              <TableColumn fx:id="pReturnDate" prefWidth="112.800048828125" text="Return Date" />
+                              <TableColumn fx:id="pDuration" prefWidth="91.20001220703125" text="Duration" />
+                              <TableColumn fx:id="pTotal" prefWidth="84.7999267578125" text="Total" />
+                              <TableColumn fx:id="pStatus" prefWidth="103.199951171875" text="Status" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="92.0" layoutY="214.0" text="Name" />
+                        <Label fx:id="test" layoutX="92.0" layoutY="179.0" text="User ID" />
+                        <Label layoutX="92.0" layoutY="249.0" text="Email" />
+                        <Label layoutX="92.0" layoutY="284.0" text="Contact" />
+                        <Label layoutX="96.0" layoutY="333.0" text="Points" />
+                        <TextField fx:id="txtUID" editable="false" layoutX="153.0" layoutY="175.0" prefHeight="17.0" prefWidth="150.0" />
+                        <TextField fx:id="txtName" editable="false" layoutX="154.0" layoutY="210.0" />
+                        <TextField fx:id="txtEmail" editable="false" layoutX="154.0" layoutY="245.0" />
+                        <TextField fx:id="txtContact" editable="false" layoutX="155.0" layoutY="280.0" />
+                        <Label layoutX="208.0" layoutY="333.0" text="N/A" />
+                        <Button fx:id="editBtn" layoutX="94.0" layoutY="136.0" mnemonicParsing="false" onAction="#editOn" text="Edit" />
+                        <Button fx:id="pSaveBtn" disable="true" layoutX="178.0" layoutY="134.0" mnemonicParsing="false" onAction="#pSave" text="Save" />
+                        <Label layoutX="786.0" layoutY="64.0" text="Rental History">
+                           <font>
+                              <Font name="Century Schoolbook" size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="pCancelBtn" layoutX="253.0" layoutY="134.0" mnemonicParsing="false" onAction="#pCancel" text="Cancel" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Rent Car">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="589.0" prefWidth="1280.0">
+                     <children>
+                        <Label layoutX="65.0" layoutY="220.0" text="Car ID" />
+                        <Label layoutX="65.0" layoutY="264.0" text="Plate No." />
+                        <Label layoutX="63.0" layoutY="310.0" text="Model" />
+                        <Label layoutX="65.0" layoutY="355.0" text="Brand" />
+                        <Label layoutX="65.0" layoutY="400.0" text="Year" />
+                        <Label layoutX="65.0" layoutY="444.0" text="Cost" />
+                        <Label layoutX="65.0" layoutY="85.0" text="Rent Date" />
+                        <Label layoutX="65.0" layoutY="130.0" text="Return Date" />
+                        <DatePicker fx:id="startDate" layoutX="160.0" layoutY="81.0" promptText="Choose rent date" />
+                        <DatePicker fx:id="returnDate" layoutX="159.0" layoutY="126.0" onAction="#calcDuration" promptText="Choose return date" />
+                        <TextField fx:id="carID" editable="false" layoutX="159.0" layoutY="216.0" prefWidth="175.2" />
+                        <TextField fx:id="txtPlateNum" editable="false" layoutX="159.0" layoutY="261.0" prefWidth="175.2" />
+                        <TextField fx:id="modelNum" editable="false" layoutX="160.0" layoutY="306.0" prefWidth="175.2" />
+                        <TextField fx:id="brandTxt" editable="false" layoutX="160.0" layoutY="351.0" prefWidth="175.2" />
+                        <TextField fx:id="year" editable="false" layoutX="159.0" layoutY="396.0" prefWidth="175.2" />
+                        <TextField fx:id="cost" editable="false" layoutX="159.0" layoutY="440.0" prefHeight="26.0" prefWidth="175.2" />
+                        <TableView fx:id="availableCarTable" layoutX="595.0" layoutY="125.0" prefHeight="370.0" prefWidth="579.0">
+                          <columns>
+                            <TableColumn fx:id="rentCarId" prefWidth="110.4000244140625" text="Car_ID" />
+                            <TableColumn fx:id="rentPlateNumCol" prefWidth="71.20001220703125" text="Plate No." />
+                              <TableColumn fx:id="rentModelCol" prefWidth="84.0" text="Model" />
+                              <TableColumn fx:id="rentBrandCol" prefWidth="64.800048828125" text="Brand" />
+                              <TableColumn fx:id="rentYearCol" prefWidth="71.20001220703125" text="Year" />
+                              <TableColumn fx:id="rentCostCol" text="Cost (RM)" />
+                              <TableColumn fx:id="rentCarStatus" prefWidth="89.5999755859375" text="Availability" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="365.0" layoutY="216.0" mnemonicParsing="false" onAction="#rentRequest" text="Request" />
+                        <Button layoutX="365.0" layoutY="260.0" mnemonicParsing="false" onAction="#clearRentText" prefHeight="26.0" prefWidth="59.0" text="Clear" />
+                        <TextArea layoutX="65.0" layoutY="472.0" prefHeight="79.0" prefWidth="310.0" text="1. Pick rent date and return date.&#10;2. The Car list will filter available cars based on days&#10;3. Select the desired car from the table.&#10;4. Click request to make a request" />
+                        <Label layoutX="871.0" layoutY="72.0" text="Available List" />
+                        <Label layoutX="65.0" layoutY="175.0" text="Duration" />
+                        <TextField fx:id="durationTxt" editable="false" layoutX="160.0" layoutY="170.0" prefHeight="26.0" prefWidth="174.0" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Payment">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="1280.0">
+                     <children>
+                        <TableView fx:id="carOnRentTable" layoutX="498.0" layoutY="79.0" prefHeight="331.0" prefWidth="643.0">
+                           <columns>
+                              <TableColumn fx:id="rOrderID" prefWidth="75.0" text="Order_ID" />
+                              <TableColumn fx:id="rPlateNum" prefWidth="75.0" text="Plate No." />
+                              <TableColumn fx:id="rVehicleDetail" prefWidth="109.5999755859375" text="Vehicle Detail" />
+                              <TableColumn fx:id="rCost" prefWidth="77.5999755859375" text="Cost (RM)" />
+                              <TableColumn fx:id="rRentDate" prefWidth="75.0" text="Start Date" />
+                              <TableColumn fx:id="rReturnDate" prefWidth="75.0" text="Return Date" />
+                              <TableColumn fx:id="rStatus" prefWidth="78.4000244140625" text="Status" />
+                              <TableColumn fx:id="rTotal" prefWidth="75.0" text="Total" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="62.0" layoutY="85.0" prefHeight="18.0" prefWidth="69.0" text="Order ID" />
+                        <Label layoutX="62.0" layoutY="125.0" text="Num PLate" />
+                        <Label layoutX="62.0" layoutY="165.0" text="Vehicle Detail" />
+                        <Label layoutX="62.0" layoutY="205.0" text="Start Date" />
+                        <Label layoutX="62.0" layoutY="245.0" text="Return Date" />
+                        <Label layoutX="63.0" layoutY="285.0" text="Duration" />
+                        <Label layoutX="62.0" layoutY="400.0" text="Total Payment :" />
+                        <Button layoutX="170.0" layoutY="462.0" mnemonicParsing="false" text="Make Payment" />
+                        <Label fx:id="orderLbl" layoutX="170.0" layoutY="86.0" text="Select from table" />
+                        <Label fx:id="numPlateLbl" layoutX="170.0" layoutY="125.0" text="Select from table" />
+                        <Label fx:id="vehicleLbl" layoutX="170.0" layoutY="165.0" text="Select from table" />
+                        <Label fx:id="startDateLbl" layoutX="170.0" layoutY="205.0" text="Select from table" />
+                        <Label fx:id="returnDateLbl" layoutX="170.0" layoutY="245.0" text="Select from table" />
+                        <Label fx:id="durationLbl" layoutX="170.0" layoutY="285.0" text="Select from table" />
+                        <Label fx:id="totalPaymentLbl" layoutX="170.0" layoutY="400.0" text="Select from table" />
+                        <Label layoutX="703.0" layoutY="23.0" text="Pending Payment">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button fx:id="adminButton" layoutX="40.0" layoutY="54.0" mnemonicParsing="false" opacity="0.0" text="Admin" />
+      <Button fx:id="exitBtn" layoutX="40.0" layoutY="42.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+   </children>
+</AnchorPane>
