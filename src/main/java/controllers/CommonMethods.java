@@ -33,7 +33,7 @@ public class CommonMethods {
    * appendAlert
    * * A method that creates a customize pop up alert for confirmation of user
    * actions
-   * 
+   *
    * @param title/header/content customize content for the pop up alert
    * @return boolean
    */
@@ -43,8 +43,7 @@ public class CommonMethods {
     alert.setHeaderText(header);
     alert.setContentText(content);
 
-    if (alert.showAndWait().get() == ButtonType.OK)
-      return true;
+    if (alert.showAndWait().get() == ButtonType.OK) return true;
 
     return false;
   }
@@ -52,28 +51,33 @@ public class CommonMethods {
   /**
    * loadButtonScene
    * * Switch the scene of the app onButtonAction
-   * 
+   *
    * @param ActionEvent retrieve the buttonID and switch to scene accordingly
    * @return FXMLLoader
    */
   public FXMLLoader loadButtonScene(ActionEvent event) {
     String newscene = "";
-    if (((Button) (event.getSource())).getId().equals("loginButton") ||
-        ((Button) (event.getSource())).getId().equals("returnButton")) {
-      new LoginController();
-      if (LoginController.isAdmin)
-        newscene = "Admin.fxml";
-      else
-        newscene = "User.fxml";
 
+    if (
+      ((Button) (event.getSource())).getId().equals("loginButton") ||
+      ((Button) (event.getSource())).getId().equals("returnButton") ||
+      ((Button) (event.getSource())).getId().equals("returnHomeBtn")
+    ) {
+      new LoginController();
+      if (LoginController.isAdmin) newscene = "Admin.fxml"; else newscene =
+        "User.fxml";
     }
 
-    if (((Button) (event.getSource())).getId().equals("logoutButton") ||
-        ((Button) (event.getSource())).getId().equals("regBtn") ||
-        ((Button) (event.getSource())).getId().equals("retBtn") ||
-        ((Button) (event.getSource())).getId().equals("exitBtn"))
+    if (
+      ((Button) (event.getSource())).getId().equals("logoutButton") ||
+      ((Button) (event.getSource())).getId().equals("regBtn") ||
+      ((Button) (event.getSource())).getId().equals("retBtn") ||
+      ((Button) (event.getSource())).getId().equals("exitBtn")
+    ) newscene = "Login.fxml";
 
-      newscene = "Login.fxml";
+    if (
+      ((Button) (event.getSource())).getId().equals("reportButton")
+    ) newscene = "Report.fxml";
 
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(newscene));
@@ -95,20 +99,23 @@ public class CommonMethods {
   /**
    * loadLinkScene
    * * Switch the scene of the app onHyperLinkAction
-   * 
+   *
    * @param ActionEvent retrieve the linkID and switch to scene accordingly
    * @return FXMLLoader
    */
   public FXMLLoader loadLinkScene(ActionEvent event) {
     String newscene = "";
-    if (((Hyperlink) (event.getSource())).getId().equals("loginLink"))
-      newscene = "Login.fxml";
+    if (
+      ((Hyperlink) (event.getSource())).getId().equals("loginLink")
+    ) newscene = "Login.fxml";
 
-    if (((Hyperlink) (event.getSource())).getId().equals("guestLink"))
-      newscene = "Guest.fxml";
+    if (
+      ((Hyperlink) (event.getSource())).getId().equals("guestLink")
+    ) newscene = "Guest.fxml";
 
-    if (((Hyperlink) (event.getSource())).getId().equals("registerLink"))
-      newscene = "Register.fxml";
+    if (
+      ((Hyperlink) (event.getSource())).getId().equals("registerLink")
+    ) newscene = "Register.fxml";
 
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource(newscene));
@@ -130,12 +137,13 @@ public class CommonMethods {
   // Sort arraylist by ID in descending order
   public ArrayList<Car> sortByLatestCar(ArrayList<Car> carAl) {
     Collections.sort(
-        carAl,
-        new Comparator<Car>() {
-          public int compare(Car c1, Car c2) {
-            return c2.get_id() - c1.get_id();
-          }
-        });
+      carAl,
+      new Comparator<Car>() {
+        public int compare(Car c1, Car c2) {
+          return c2.get_id() - c1.get_id();
+        }
+      }
+    );
 
     return carAl;
   }
@@ -143,12 +151,13 @@ public class CommonMethods {
   // Sort arraylist by ID in descending order
   public ArrayList<Order> sortByLatestOrder(ArrayList<Order> orderAl) {
     Collections.sort(
-        orderAl,
-        new Comparator<Order>() {
-          public int compare(Order o1, Order o2) {
-            return o2.get_id() - o1.get_id();
-          }
-        });
+      orderAl,
+      new Comparator<Order>() {
+        public int compare(Order o1, Order o2) {
+          return o2.get_id() - o1.get_id();
+        }
+      }
+    );
 
     return orderAl;
   }
@@ -156,12 +165,13 @@ public class CommonMethods {
   // Sort arraylist by ID in descending order
   public ArrayList<Log> sortByLatestLog(ArrayList<Log> logAl) {
     Collections.sort(
-        logAl,
-        new Comparator<Log>() {
-          public int compare(Log l1, Log l2) {
-            return l2.get_id() - l1.get_id();
-          }
-        });
+      logAl,
+      new Comparator<Log>() {
+        public int compare(Log l1, Log l2) {
+          return l2.get_id() - l1.get_id();
+        }
+      }
+    );
 
     return logAl;
   }

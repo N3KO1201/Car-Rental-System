@@ -29,7 +29,7 @@ public interface AdminDao {
   void searchOrder(ActionEvent e);
   void rejectOrder(ActionEvent e);
   void approveOrder(ActionEvent e);
-  void generateReport();
+  void generateReport(ActionEvent e);
 
   // Logs
   void viewAllLog();

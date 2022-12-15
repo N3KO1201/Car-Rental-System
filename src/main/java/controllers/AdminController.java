@@ -85,7 +85,7 @@ public class AdminController
   private TableColumn<Order, Long> durationCol;
 
   @FXML
-  private TableColumn<Order, String> clientNameCol, contactCol, vehicleDetailCol;
+  private TableColumn<Order, String> clientNameCol, contactCol, vehicleDetailCol, numPlateDetailCol;
 
   @FXML
   private TableColumn<Order, LocalDate> rentalCol;
@@ -651,6 +651,10 @@ public class AdminController
       new PropertyValueFactory<Order, String>("vehicle")
     );
 
+    numPlateDetailCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("plateNum")
+    );
+
     orderCostCol.setCellValueFactory(
       new PropertyValueFactory<Order, Double>("cost")
     );
@@ -696,6 +700,10 @@ public class AdminController
 
     vehicleDetailCol.setCellValueFactory(
       new PropertyValueFactory<Order, String>("vehicle")
+    );
+
+    numPlateDetailCol.setCellValueFactory(
+      new PropertyValueFactory<Order, String>("plateNum")
     );
 
     orderCostCol.setCellValueFactory(
@@ -853,9 +861,11 @@ public class AdminController
 
   @Override
   public void generateReport(ActionEvent e) {
+    ArrayList<Order> orderAl = new FileService().readOrderData();
+
     FXMLLoader loader = super.loadButtonScene(e);
-    ReportController receiptController = loader.getController();
-    receiptController.generateReport();
+    ReportController reportController = loader.getController();
+    reportController.generateReport(orderAl);
   }
 
   @Override

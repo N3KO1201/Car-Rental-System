@@ -190,18 +190,19 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="1271.0">
                      <children>
-                        <TableView fx:id="orderTable" editable="true" layoutY="86.0" prefHeight="496.0" prefWidth="1280.0">
+                        <TableView fx:id="orderTable" editable="true" layoutY="90.0" prefHeight="496.0" prefWidth="1280.0">
                            <columns>
                               <TableColumn fx:id="_orderIdCol" prefWidth="79.0" resizable="false" style="fx-text-alignment: center;" text="Order ID" />
                               <TableColumn fx:id="clientNameCol" prefWidth="159.0" resizable="false" style="-fx-alignment: CENTER-LEFT;" text="Client Name" />
-                              <TableColumn fx:id="contactCol" prefWidth="140.0" resizable="false" text="Contact Number" />
-                              <TableColumn fx:id="vehicleDetailCol" prefWidth="262.0" resizable="false" text="Vehicle Detail" />
-                              <TableColumn fx:id="orderCostCol" prefWidth="106.0" resizable="false" text="Rental Cost p.d. " />
-                              <TableColumn fx:id="rentalCol" minWidth="0.0" prefWidth="117.0" resizable="false" text="Rental Date" />
-                              <TableColumn fx:id="durationCol" prefWidth="86.0" resizable="false" text="Duration" />
-                              <TableColumn fx:id="paymentCol" prefWidth="79.0" resizable="false" text="Payment " />
-                              <TableColumn fx:id="totalPaymentCol" prefWidth="127.0" resizable="false" text="Total Payment (RM)" />
-                              <TableColumn fx:id="orderStatusCol" prefWidth="122.0" resizable="false" text="Order Status" />
+                              <TableColumn fx:id="contactCol" prefWidth="132.0" resizable="false" text="Contact Number" />
+                              <TableColumn fx:id="vehicleDetailCol" prefWidth="209.0" resizable="false" text="Vehicle Detail" />
+                              <TableColumn fx:id="numPlateDetailCol" prefWidth="109.0" resizable="false" text="Number Plate" />
+                              <TableColumn fx:id="orderCostCol" prefWidth="110.0" resizable="false" text="Rental Cost p.d. " />
+                              <TableColumn fx:id="rentalCol" minWidth="0.0" prefWidth="114.0" resizable="false" text="Rental Date" />
+                              <TableColumn fx:id="durationCol" prefWidth="75.0" resizable="false" text="Duration" />
+                              <TableColumn fx:id="paymentCol" prefWidth="76.0" resizable="false" text="Payment " />
+                              <TableColumn fx:id="totalPaymentCol" prefWidth="125.0" resizable="false" text="Total Payment (RM)" />
+                              <TableColumn fx:id="orderStatusCol" prefWidth="91.0" resizable="false" text="Order Status" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

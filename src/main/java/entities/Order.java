@@ -23,18 +23,19 @@ public class Order implements Serializable {
   private final double serviceTax = 1.1;
 
   public Order(
-      int _id,
-      int clientID,
-      String clientName,
-      String contact,
-      String plateNum,
-      String vehicle,
-      double cost,
-      LocalDate rentOn,
-      LocalDate returnOn,
-      boolean paid) {
+    int _id,
+    int clientID,
+    String clientName,
+    String contact,
+    String plateNum,
+    String vehicle,
+    double cost,
+    LocalDate rentOn,
+    LocalDate returnOn,
+    boolean paid
+  ) {
     this.set_id(_id); // 1000
-    this.setClientID(clientID);// 1
+    this.setClientID(clientID); // 1
     this.setClientName(clientName); // eugene
     this.setContact(contact); // 0183216766
     this.setPlateNum(plateNum);
@@ -52,17 +53,19 @@ public class Order implements Serializable {
   @Override
   public String toString() {
     return String.format(
-        "%d %s %s %s %.2f %s %d %s %.2f %s",
-        _id,
-        _clientName,
-        _contact,
-        _vehicle,
-        _cost,
-        _rentOn,
-        _duration,
-        _isPaid,
-        _totalCost,
-        _orderStatus);
+      "%d %s %s %s %.2f %s %d %s %.2f %s",
+      _id,
+      _clientName,
+      _plateNum,
+      _contact,
+      _vehicle,
+      _cost,
+      _rentOn,
+      _duration,
+      _isPaid,
+      _totalCost,
+      _orderStatus
+    );
   }
 
   // Getter
@@ -176,5 +179,4 @@ public class Order implements Serializable {
   public void setOrderStatus(Status _orderStatus) {
     this._orderStatus = _orderStatus;
   }
-
 }
