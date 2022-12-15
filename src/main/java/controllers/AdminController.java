@@ -42,7 +42,7 @@ public class AdminController
   implements AdminDao, Initializable {
 
   @FXML
-  private Label homeTitle;
+  private Label homeTitle, totalRevenue, totalCar;
 
   @FXML
   private Label numberPlateErr, modelErr, brandErr, yearErr, costErr, descriptionErr;
@@ -346,7 +346,7 @@ public class AdminController
 
       // Validate listing details input
       ArrayList<String> validateAl = new ValidationService()
-      .validateListingDetails(
+        .validateListingDetails(
           newNumPlate,
           newModel,
           newBrand,
@@ -589,7 +589,7 @@ public class AdminController
         }
       }
       if (!found) System.out.println("What can you do?"); else new FileService()
-      .writeCarData(carAl);
+        .writeCarData(carAl);
 
       listingTable.setEditable(false);
 
@@ -849,7 +849,7 @@ public class AdminController
   }
 
   @Override
-  public void generateReport() {}
+  public void generateReport(ActionEvent e) {}
 
   @Override
   public void viewAllLog() {
