@@ -34,7 +34,7 @@ import main.java.util.FileService;
 
 public class UserController
   extends CommonMethods
-  implements UserDao, Initializable {
+  implements Initializable {
 
   @FXML
   private Button adminButton;
@@ -242,7 +242,7 @@ public class UserController
 
   // method to populate table
 
-  public void populateRentTable(ArrayList orderAl) {
+  public void populateRentTable(ArrayList<Order> orderAl) {
     ObservableList<Order> OrderOl = FXCollections.observableArrayList(orderAl);
 
     pOrderID.setCellValueFactory(
@@ -518,7 +518,29 @@ public class UserController
   /*
    * return car page
    */
+  // make payment
 
+  public void returnCar(ActionEvent event) {
+    ArrayList<Order> orderAl = new FileService().readOrderData();
+        ListIterator<Order> orderLi = orderAl.listIterator();
+        ArrayList<Car> carAl = new FileService().readCarData();
+        ListIterator<Car> carLi = carAl.listIterator();
+          while (orderLi.hasNext()) {
+            Order order = orderLi.next();
+              if (order.get_id() == carOnRentTable.getSelectionModel().getSelectedItem().get_id()) {
+                order.setPaid(true);
+                  while (carLi.hasNext()) {
+                    Car car = carLi.next();
+                      if (car.getPlateNum().equals(order.getPlateNum())) {
+                        car.setAvailable(true);
+                      }
+                  }
+              }
+          }
+          new FileService().writeCarData(carAl);
+          new FileService().writeOrderData(orderAl);
+          populateAllTable();
+      }
   // populates table content when user logins
   public void populateReturnTable(String loggedInUsername) {
     ArrayList<Order> orderAl = new FileService().readOrderData();
@@ -624,15 +646,4 @@ public class UserController
     populateAllTable();
   }
 
-  @Override
-  public void login(ActionEvent e) throws IOException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void register(ActionEvent e) throws IOException {
-    // TODO Auto-generated method stub
-
-  }
 }
