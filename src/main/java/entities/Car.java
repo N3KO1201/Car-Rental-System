@@ -19,14 +19,15 @@ public class Car implements Serializable {
   final double serviceTax = 1.1;
 
   public Car(
-      int _id,
-      String plateNum,
-      String model,
-      String brand,
-      int year,
-      double cost,
-      String description,
-      boolean available) {
+    int _id,
+    String plateNum,
+    String model,
+    String brand,
+    int year,
+    double cost,
+    String description,
+    boolean available
+  ) {
     this.set_id(_id);
     this.setPlateNum(plateNum);
     this.setModel(model);
@@ -78,16 +79,17 @@ public class Car implements Serializable {
   @Override
   public String toString() {
     return String.format(
-        "%d %s %s %s %d %.2f %s %b %s",
-        _id,
-        _plateNum,
-        _model,
-        _brand,
-        _year,
-        _cost,
-        _description,
-        _available,
-        _createdAt);
+      "%d %s %s %s %d %.2f %s %b %s",
+      _id,
+      _plateNum,
+      _model,
+      _brand,
+      _year,
+      _cost,
+      _description,
+      _available,
+      _createdAt
+    );
   }
 
   // Setter
