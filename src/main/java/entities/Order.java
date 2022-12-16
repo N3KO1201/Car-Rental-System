@@ -53,7 +53,7 @@ public class Order implements Serializable {
   @Override
   public String toString() {
     return String.format(
-      "%d %s %s %s %.2f %s %d %s %.2f %s",
+      "%d %s %s %s %s %.2f %s %d %s %.2f %s",
       _id,
       _clientName,
       _plateNum,

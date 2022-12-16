@@ -25,16 +25,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import main.java.dao.UserDao;
 import main.java.entities.Car;
 import main.java.entities.Order;
 import main.java.entities.Status;
 import main.java.entities.User;
 import main.java.util.FileService;
 
-public class UserController
-  extends CommonMethods
-  implements UserDao, Initializable {
+public class UserController extends CommonMethods implements Initializable {
 
   @FXML
   private Button adminButton;
@@ -426,7 +423,7 @@ public class UserController
         recentID,
         userID,
         LoginController.loggedInUsername,
-        String.valueOf(txtContact.getText()),
+        txtContact.getText(),
         plateNum,
         brand + " " + model_num + ", " + manuYear,
         Double.parseDouble(costPerDay),
@@ -622,17 +619,5 @@ public class UserController
     carSelected();
     orderSelected();
     populateAllTable();
-  }
-
-  @Override
-  public void login(ActionEvent e) throws IOException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void register(ActionEvent e) throws IOException {
-    // TODO Auto-generated method stub
-
   }
 }
